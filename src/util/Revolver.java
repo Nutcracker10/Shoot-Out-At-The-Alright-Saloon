@@ -1,11 +1,10 @@
 package util;
 
 public class Revolver {
-    private int capacity, damage;
+    private int capacity;
 
     public Revolver() {
         this.capacity = 6;
-        this.damage = 5;
     }
 
     public boolean canfire() {
@@ -23,10 +22,6 @@ public class Revolver {
         if ( capacity < 6 )
             this.capacity++;
         // else "thud"
-    }
-
-    public int getDamage() {
-        return this.damage;
     }
 
     public int getCapacity() { return this.capacity;}

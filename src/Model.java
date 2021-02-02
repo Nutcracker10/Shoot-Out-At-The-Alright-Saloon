@@ -35,9 +35,11 @@ public class Model {
 	 private  GameObject Player;
 	 private Revolver revolver;
 	 private Controller controller = Controller.getInstance();
+	 private Mouse mouse;
 	 private  CopyOnWriteArrayList<GameObject> EnemiesList  = new CopyOnWriteArrayList<GameObject>();
 	 private  CopyOnWriteArrayList<GameObject> BulletList  = new CopyOnWriteArrayList<GameObject>();
-	 private int Score=0; 
+	 private int Score=0;
+	 private int ammo = 0;
 
 	public Model() {
 		 //setup game world 
@@ -111,7 +113,7 @@ public class Model {
 		{
 		    //check to move them
 			  
-			temp.getCentre().ApplyVector(new Vector3f(0,1,0));
+			temp.getCentre().ApplyVector(new Vector3f(0,3,0));
 			//see if they hit anything 
 			
 			//see if they get to the top of the screen ( remember 0 is the top 
@@ -148,12 +150,14 @@ public class Model {
 			if (revolver.canfire()) { // check if there are bullets to shoot
 				CreateBullet();
 				revolver.fired(); // reduce bullet count
+				ammo = revolver.getCapacity();
 			}
 			Controller.getInstance().setKeySpacePressed(false);
 		}
 
 		if (Controller.getInstance().isKeyRPressed() ) {
 			revolver.reload(); // add one bullet back to capacity
+			ammo = revolver.getCapacity();
 			Controller.getInstance().setKeyRPressed(false);
 		}
 		
