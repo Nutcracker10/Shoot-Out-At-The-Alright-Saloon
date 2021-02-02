@@ -1,10 +1,4 @@
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.LayoutManager;
-import java.awt.Rectangle;
-import java.awt.TexturePaint;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -90,10 +84,11 @@ public class Viewer extends JPanel {
 		
 		//Draw background 
 		drawBackground(g);
-		
+
 		//Draw player
 		drawPlayer(x, y, width, height, texture,g);
-		  
+		drawHUD(gameworld.getAmmo(), g);
+
 		//Draw Bullets 
 		// change back 
 		gameworld.getBullets().forEach((temp) -> 
@@ -172,6 +167,12 @@ public class Viewer extends JPanel {
 		// Bullets from https://opengameart.org/forumtopic/tatermands-art 
 		// background image from https://www.needpix.com/photo/download/677346/space-stars-nebula-background-galaxy-universe-free-pictures-free-photos-free-images
 		
+	}
+
+	private void drawHUD(int ammo, Graphics g) {
+		Font font = new Font("Courier", Font.BOLD, 20);
+		g.setFont(font);
+		g.drawString((ammo + " / 6"), 940, 950);
 	}
 		 
 	 

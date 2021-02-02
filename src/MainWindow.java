@@ -1,6 +1,4 @@
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Image;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
@@ -13,7 +11,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
+
 
 import util.UnitTests;
 
@@ -52,7 +50,7 @@ public class MainWindow {
 	 private static int TargetFPS = 100;
 	 private static boolean startGame= false; 
 	 private JLabel BackgroundImageForStartMenu ;
-	  
+
 	public MainWindow() {
 	        frame.setSize(1000, 1000);  // you can customise this later and adapt it to change on size.  
 	      	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);   //If exit // you can modify with your way of quitting , just is a template.
@@ -61,8 +59,7 @@ public class MainWindow {
 	        canvas.setBounds(0, 0, 1000, 1000); 
 	        canvas.setBackground(new Color(255,255,255)); //white background  replaced by Space background but if you remove the background method this will draw a white screen
 		    canvas.setVisible(false);   // this will become visible after you press the key.
-		          
-		       
+
 	        JButton startMenuButton = new JButton("Start Game");  // start button 
 	        startMenuButton.addActionListener(new ActionListener() {
 				@Override
@@ -85,13 +82,13 @@ public class MainWindow {
 				 BufferedImage myPicture = ImageIO.read(BackroundToLoad);
 				 BackgroundImageForStartMenu = new JLabel(new ImageIcon(myPicture));
 				 BackgroundImageForStartMenu.setBounds(0, 0, 1000, 1000);
-				frame.add(BackgroundImageForStartMenu); 
+				 frame.add(BackgroundImageForStartMenu);
 			}  catch (IOException e) { 
 				e.printStackTrace();
 			}   
 			 
-	         frame.add(startMenuButton);  
-	       frame.setVisible(true);   
+			frame.add(startMenuButton);
+			frame.setVisible(true);
 	}
 
 	public static void main(String[] args) {
@@ -110,7 +107,7 @@ public class MainWindow {
 			if(startGame) {
 				 gameloop();
 			}
-			
+
 			//UNIT test to see if framerate matches 
 		 UnitTests.CheckFrameRate(System.currentTimeMillis(),FrameCheck, TargetFPS); 
 			  
@@ -129,13 +126,14 @@ public class MainWindow {
 		gameworld.gamelogic();
 		// view update 
 		
-		  canvas.updateview(); 
-		
+		canvas.updateview();
+
 		// Both these calls could be setup as  a thread but we want to simplify the game logic for you.  
 		//score update  
 		 frame.setTitle("Score =  "+ gameworld.getScore());
 
 		 //TODO display capacity
+
 		
 		 
 	}

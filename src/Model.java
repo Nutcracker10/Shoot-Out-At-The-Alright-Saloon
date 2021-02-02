@@ -149,14 +149,14 @@ public class Model {
 		if(Controller.getInstance().isKeySpacePressed()) {
 			if (revolver.canfire()) { // check if there are bullets to shoot
 				CreateBullet();
-				revolver.fired(); // reduce bullet count
+				revolver.fired(); // reduce ammo count
 				ammo = revolver.getAmmo();
 			}
 			Controller.getInstance().setKeySpacePressed(false);
 		}
 
 		if (Controller.getInstance().isKeyRPressed() ) {
-			revolver.reload(); // add one bullet back to capacity
+			revolver.reload(); // add one bullet back to ammo
 			ammo = revolver.getAmmo();
 			Controller.getInstance().setKeyRPressed(false);
 		}
@@ -164,8 +164,7 @@ public class Model {
 	}
 
 	private void CreateBullet() {
-		BulletList.add(new GameObject("res/Bullet.png",32,64,new Point3f(Player.getCentre().getX(),Player.getCentre().getY(),0.0f)));
-		
+		BulletList.add(new GameObject("res/Bullet.png",16,32, new Point3f(Player.getCentre().getX(),Player.getCentre().getY(),0.0f)));
 	}
 
 	public GameObject getPlayer() {
