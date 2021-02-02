@@ -64,8 +64,7 @@ public class MainWindow {
 		          
 		       
 	        JButton startMenuButton = new JButton("Start Game");  // start button 
-	        startMenuButton.addActionListener(new ActionListener()
-	           { 
+	        startMenuButton.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) { 
 					startMenuButton.setVisible(false);
@@ -74,7 +73,9 @@ public class MainWindow {
 					canvas.addKeyListener(Controller);    //adding the controller to the Canvas  
 	            	canvas.requestFocusInWindow();   // making sure that the Canvas is in focus so keyboard input will be taking in .
 					startGame=true;
-				}});  
+				}
+	           })
+			;
 	        startMenuButton.setBounds(400, 500, 200, 40); 
 	        
 	        //loading background image 
