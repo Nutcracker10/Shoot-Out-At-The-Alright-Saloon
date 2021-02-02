@@ -1,6 +1,7 @@
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -90,11 +91,7 @@ public class Controller implements KeyListener {
 	
 	}
 
-	public double getMousePos(MouseEvent event, int x, int y) {
-		double xDist = (event.getX()-x);
-		double yDist = (event.getY()-y);
-		return (Math.atan2(yDist, xDist) ); // return the angle of the player object to the mouse
-	}
+
 
 	public boolean isKeyAPressed() {
 		return KeyAPressed;
