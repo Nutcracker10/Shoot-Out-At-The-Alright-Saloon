@@ -1,28 +1,31 @@
 package util;
 
 public class Revolver {
-    private int capacity;
+    private int ammo, capacity;
 
     public Revolver() {
         this.capacity = 6;
+        this.ammo = capacity;
     }
 
     public boolean canfire() {
-        if ( capacity > 0 )
+        if ( ammo > 0 )
             return true;
         else
             return false;
     }
 
     public void fired() {
-        this.capacity--;
+        this.ammo--;
     }
 
     public void reload() {
-        if ( capacity < 6 )
-            this.capacity++;
+        if ( ammo < capacity)
+            this.ammo++;
         // else "thud"
     }
 
     public int getCapacity() { return this.capacity;}
+
+    public int getAmmo() {return  this.ammo; }
 }

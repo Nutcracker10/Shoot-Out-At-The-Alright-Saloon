@@ -150,14 +150,14 @@ public class Model {
 			if (revolver.canfire()) { // check if there are bullets to shoot
 				CreateBullet();
 				revolver.fired(); // reduce bullet count
-				ammo = revolver.getCapacity();
+				ammo = revolver.getAmmo();
 			}
 			Controller.getInstance().setKeySpacePressed(false);
 		}
 
 		if (Controller.getInstance().isKeyRPressed() ) {
 			revolver.reload(); // add one bullet back to capacity
-			ammo = revolver.getCapacity();
+			ammo = revolver.getAmmo();
 			Controller.getInstance().setKeyRPressed(false);
 		}
 		
@@ -183,7 +183,10 @@ public class Model {
 	public int getScore() { 
 		return Score;
 	}
- 
+
+	public int getAmmo() {
+		return ammo;
+	}
 
 }
 
