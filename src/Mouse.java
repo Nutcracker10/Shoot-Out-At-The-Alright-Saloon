@@ -2,10 +2,14 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 public class Mouse implements MouseListener {
-    private boolean mouseLeftPressed = false;
-    private boolean mouseRightPressed = false;
+    private static boolean mouseLeftPressed = false;
+    private static boolean mouseRightPressed = false;
 
+    private static final Mouse instance = new Mouse();
 
+    public Mouse () {}
+
+    public static Mouse getInstance() {return instance; }
 
     @Override
     public void mouseClicked(MouseEvent e) {
@@ -14,9 +18,12 @@ public class Mouse implements MouseListener {
 
     @Override
     public void mousePressed(MouseEvent e) {
+        System.out.println(e.getButton());
         switch (e.getButton() ) {
             case MouseEvent.BUTTON1:setMouseLeftPressed(true); break;
             case MouseEvent.BUTTON3:setMouseRightPressed(true); break;
+            default:
+                break;
         }
     }
 
@@ -25,6 +32,8 @@ public class Mouse implements MouseListener {
         switch (e.getButton() ) {
             case MouseEvent.BUTTON1:setMouseLeftPressed(false); break;
             case MouseEvent.BUTTON3:setMouseRightPressed(false); break;
+            default:
+                break;
         }
     }
 
@@ -40,11 +49,11 @@ public class Mouse implements MouseListener {
 
     public boolean isMouseRightPressed() { return mouseRightPressed; }
 
-    public void setMouseRightPressed(boolean mouseRightPressed) { mouseRightPressed = mouseRightPressed;}
+    public void setMouseRightPressed(boolean mouseRightPressed) { this.mouseRightPressed = mouseRightPressed; }
 
     public boolean isMouseLeftPressed() { return mouseLeftPressed; }
 
-    public void setMouseLeftPressed(boolean mouseLeftPressed) { mouseLeftPressed = mouseRightPressed ;}
+    public void setMouseLeftPressed(boolean mouseLeftPressed) { this.mouseLeftPressed = mouseLeftPressed ;}
 
     public double getAngle(MouseEvent event, int x, int y) {
         double xDist = (event.getX()-x);

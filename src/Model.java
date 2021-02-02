@@ -35,7 +35,7 @@ public class Model {
 	 private  GameObject Player;
 	 private Revolver revolver;
 	 private Controller controller = Controller.getInstance();
-	 private Mouse mouse;
+	 private Mouse mouse = Mouse.getInstance();
 	 private  CopyOnWriteArrayList<GameObject> EnemiesList  = new CopyOnWriteArrayList<GameObject>();
 	 private  CopyOnWriteArrayList<GameObject> BulletList  = new CopyOnWriteArrayList<GameObject>();
 	 private int Score=0;
@@ -153,6 +153,15 @@ public class Model {
 				ammo = revolver.getAmmo();
 			}
 			Controller.getInstance().setKeySpacePressed(false);
+		}
+
+		if(Mouse.getInstance().isMouseLeftPressed()) {
+			if (revolver.canfire()) { // check if there are bullets to shoot
+				CreateBullet();
+				revolver.fired(); // reduce ammo count
+				ammo = revolver.getAmmo();
+			}
+			Mouse.getInstance().setMouseLeftPressed(false);
 		}
 
 		if (Controller.getInstance().isKeyRPressed() ) {

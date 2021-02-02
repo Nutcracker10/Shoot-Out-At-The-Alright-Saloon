@@ -172,6 +172,7 @@ public class Viewer extends JPanel {
 	private void drawHUD(int ammo, Graphics g) {
 		Font font = new Font("Courier", Font.BOLD, 20);
 		g.setFont(font);
+		g.setColor(Color.white);
 		g.drawString((ammo + " / 6"), 940, 950);
 	}
 		 
