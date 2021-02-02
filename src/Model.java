@@ -4,7 +4,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import util.GameObject;
 import util.Point3f;
-import util.Vector3f; 
+import util.Vector3f;
+import util.Revolver;
 /*
  * Created by Abraham Campbell on 15/01/2020.
  *   Copyright (c) 2020  Abraham Campbell
@@ -32,6 +33,7 @@ SOFTWARE.
 public class Model {
 	
 	 private  GameObject Player;
+	 private Revolver revolver;
 	 private Controller controller = Controller.getInstance();
 	 private  CopyOnWriteArrayList<GameObject> EnemiesList  = new CopyOnWriteArrayList<GameObject>();
 	 private  CopyOnWriteArrayList<GameObject> BulletList  = new CopyOnWriteArrayList<GameObject>();
@@ -41,6 +43,7 @@ public class Model {
 		 //setup game world 
 		//Player 
 		Player= new GameObject("res/Lightning.png",50,50,new Point3f(500,500,0));
+		revolver = new Revolver();
 		//Enemies  starting with four
 		EnemiesList.add(new GameObject("res/UFO.png",50,50,new Point3f(((float)Math.random()*50+400 ),0,0))); 
 		EnemiesList.add(new GameObject("res/UFO.png",50,50,new Point3f(((float)Math.random()*50+500 ),0,0)));
@@ -142,9 +145,17 @@ public class Model {
 		}
 		
 		if(Controller.getInstance().isKeySpacePressed()) {
-			CreateBullet();
+			if (revolver.canfire()) { // check if there are bullets to shoot
+				CreateBullet();
+				revolver.fired(); // reduce bullet count
+			}
 			Controller.getInstance().setKeySpacePressed(false);
-		} 
+		}
+
+		if (Controller.getInstance().isKeyRPressed() ) {
+			revolver.reload(); // add one bullet back to capacity
+			Controller.getInstance().setKeyRPressed(false);
+		}
 		
 	}
 
