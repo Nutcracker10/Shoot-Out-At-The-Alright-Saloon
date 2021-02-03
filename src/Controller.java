@@ -195,11 +195,6 @@ public class Controller implements KeyListener, MouseListener {
 
 	public void setMouseLeftPressed(boolean mouseLeftPressed) { this.mouseLeftPressed = mouseLeftPressed ;}
 
-	public double getAngle(MouseEvent event, int x, int y) {
-		double xDist = (event.getX()-x);
-		double yDist = (event.getY()-y);
-		return (Math.atan2(yDist, xDist) ); // return the angle of the player object to the mouse
-	}
 }
 
 /*

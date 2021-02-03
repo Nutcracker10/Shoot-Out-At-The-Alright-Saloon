@@ -1,8 +1,19 @@
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
+import java.awt.font.FontRenderContext;
+import java.awt.font.GlyphVector;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.awt.image.BufferedImageOp;
+import java.awt.image.ImageObserver;
+import java.awt.image.RenderedImage;
+import java.awt.image.renderable.RenderableImage;
 import java.io.File;
 import java.io.IOException;
+import java.text.AttributedCharacterIterator;
 import java.util.Iterator;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
@@ -37,13 +48,15 @@ SOFTWARE.
  
  * Credits: Kelly Charles (2020)
  */ 
-public class Viewer extends JPanel {
+public class Viewer extends JPanel implements MouseMotionListener {
 	private long CurrentAnimationTime= 0; 
 	
-	Model gameworld =new Model(); 
+	Model gameworld =new Model();
+	private double imageAngleRad = 0;
 	 
 	public Viewer(Model World) {
 		this.gameworld=World;
+		addMouseMotionListener(this);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -151,11 +164,26 @@ public class Viewer extends JPanel {
 	private void drawPlayer(int x, int y, int width, int height, String texture,Graphics g) { 
 		File TextureToLoad = new File(texture);  //should work okay on OSX and Linux but check if you have issues depending your eclipse install or if your running this without an IDE 
 		try {
-			Image myImage = ImageIO.read(TextureToLoad);
-			//The spirte is 32x32 pixel wide and 4 of them are placed together so we need to grab a different one each time 
-			//remember your training :-) computer science everything starts at 0 so 32 pixels gets us to 31  
-			int currentPositionInAnimation= ((int) ((CurrentAnimationTime%40)/10))*32; //slows down animation so every 10 frames we get another frame so every 100ms 
-			g.drawImage(myImage, x,y, x+width, y+height, currentPositionInAnimation  , 0, currentPositionInAnimation+31, 32, null);
+			Graphics2D graphics2D = (Graphics2D)g;
+			graphics2D.setRenderingHint(
+					RenderingHints.KEY_RENDERING,
+					RenderingHints.VALUE_RENDER_QUALITY
+			);
+
+			BufferedImage myImage = ImageIO.read(TextureToLoad);
+			int cx = myImage.getWidth() / 2;
+			int cy = myImage.getHeight() / 2;
+			AffineTransform oldAT = graphics2D.getTransform();
+			graphics2D.translate(cx+x, cy+y);
+
+			int currentPositionInAnimation= ((int) ((CurrentAnimationTime%40)/10))*32; //slows down animation so every 10 frames we get another frame so every 100ms
+			graphics2D.rotate(imageAngleRad);
+			graphics2D.translate(-x, -y);
+			graphics2D.drawImage(myImage, x,y, x+width, y+height, currentPositionInAnimation  , 0, currentPositionInAnimation+31, 32, null);
+			graphics2D.setTransform(oldAT);
+
+			//credit to this stack overflow for showing how to do mouse following
+			//https://stackoverflow.com/questions/26607930/java-rotate-image-towards-mouse-position
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -175,9 +203,20 @@ public class Viewer extends JPanel {
 		g.setColor(Color.white);
 		g.drawString((ammo + " / " + capacity), 940, 950);
 	}
-		 
-	 
 
+
+	@Override
+	public void mouseDragged(MouseEvent e) {
+
+	}
+
+	@Override
+	public void mouseMoved(MouseEvent e) {
+		double xDist = (e.getX()-gameworld.getPlayer().getCentre().getX());
+		double yDist = (e.getY()-gameworld.getPlayer().getCentre().getY());
+		imageAngleRad = Math.atan2(yDist, xDist);
+		repaint();
+	}
 }
 
 
