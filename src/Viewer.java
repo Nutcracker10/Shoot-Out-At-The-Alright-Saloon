@@ -176,10 +176,10 @@ public class Viewer extends JPanel implements MouseMotionListener {
 			AffineTransform oldAT = graphics2D.getTransform();
 			graphics2D.translate(cx+x, cy+y);
 
-			int currentPositionInAnimation= ((int) ((CurrentAnimationTime%40)/10))*32; //slows down animation so every 10 frames we get another frame so every 100ms
+			//int currentPositionInAnimation= ((int) ((CurrentAnimationTime%40)/10))*32; //slows down animation so every 10 frames we get another frame so every 100ms
 			graphics2D.rotate(imageAngleRad);
 			graphics2D.translate(-x, -y);
-			graphics2D.drawImage(myImage, x,y, x+width, y+height, currentPositionInAnimation  , 0, currentPositionInAnimation+31, 32, null);
+			graphics2D.drawImage(myImage, x,y, x+width, y+height,  null);
 			graphics2D.setTransform(oldAT);
 
 			//credit to this stack overflow for showing how to do mouse following
