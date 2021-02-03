@@ -87,7 +87,7 @@ public class Viewer extends JPanel {
 
 		//Draw player
 		drawPlayer(x, y, width, height, texture,g);
-		drawHUD(gameworld.getAmmo(), g);
+		drawHUD(gameworld.getAmmo(), gameworld.getCapacity(), g);
 
 		//Draw Bullets 
 		// change back 
@@ -169,11 +169,11 @@ public class Viewer extends JPanel {
 		
 	}
 
-	private void drawHUD(int ammo, Graphics g) {
+	private void drawHUD(int ammo, int capacity, Graphics g) {
 		Font font = new Font("Courier", Font.BOLD, 20);
 		g.setFont(font);
 		g.setColor(Color.white);
-		g.drawString((ammo + " / 6"), 940, 950);
+		g.drawString((ammo + " / " + capacity), 940, 950);
 	}
 		 
 	 

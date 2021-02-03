@@ -35,7 +35,6 @@ public class Model {
 	 private  GameObject Player;
 	 private Revolver revolver;
 	 private Controller controller = Controller.getInstance();
-	 private Mouse mouse = Mouse.getInstance();
 	 private  CopyOnWriteArrayList<GameObject> EnemiesList  = new CopyOnWriteArrayList<GameObject>();
 	 private  CopyOnWriteArrayList<GameObject> BulletList  = new CopyOnWriteArrayList<GameObject>();
 	 private int Score=0;
@@ -120,7 +119,7 @@ public class Model {
 			if (temp.getCentre().getY()==0)
 			{
 			 	BulletList.remove(temp);
-			} 
+			}
 		} 
 		
 	}
@@ -145,23 +144,19 @@ public class Model {
 		if(Controller.getInstance().isKeySPressed()){
 			Player.getCentre().ApplyVector( new Vector3f(0,-2,0));
 		}
-		
-		if(Controller.getInstance().isKeySpacePressed()) {
+
+		if(Controller.getInstance().isMouseLeftPressed()) {
 			if (revolver.canfire()) { // check if there are bullets to shoot
 				CreateBullet();
 				revolver.fired(); // reduce ammo count
-				ammo = revolver.getAmmo();
+				ammo = revolver.getAmmo(); // report ammo to HUD
 			}
-			Controller.getInstance().setKeySpacePressed(false);
+			Controller.getInstance().setMouseLeftPressed(false);
 		}
 
-		if(Mouse.getInstance().isMouseLeftPressed()) {
-			if (revolver.canfire()) { // check if there are bullets to shoot
-				CreateBullet();
-				revolver.fired(); // reduce ammo count
-				ammo = revolver.getAmmo();
-			}
-			Mouse.getInstance().setMouseLeftPressed(false);
+		if ( Controller.getInstance().isMouseRightPressed() ) {
+			revolver.cockHammer(); // ready to pew
+			Controller.getInstance().setMouseRightPressed(false);
 		}
 
 		if (Controller.getInstance().isKeyRPressed() ) {
@@ -195,6 +190,8 @@ public class Model {
 	public int getAmmo() {
 		return ammo;
 	}
+
+	public int getCapacity() { return revolver.getCapacity(); }
 
 }
 

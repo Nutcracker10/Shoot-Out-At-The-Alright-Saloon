@@ -31,14 +31,17 @@ SOFTWARE.
  */ 
 
 //Singeton pattern
-public class Controller implements KeyListener {
+public class Controller implements KeyListener, MouseListener {
         
-	   private static boolean KeyAPressed= false;
-	   private static boolean KeySPressed= false;
-	   private static boolean KeyDPressed= false;
-	   private static boolean KeyWPressed= false;
-	   private static boolean KeyRPressed = false;
-	   private static boolean KeySpacePressed= false;
+	private static boolean KeyAPressed= false;
+	private static boolean KeySPressed= false;
+	private static boolean KeyDPressed= false;
+	private static boolean KeyWPressed= false;
+	private static boolean KeyRPressed = false;
+	private static boolean KeySpacePressed= false;
+
+	private static boolean mouseLeftPressed = false;
+	private static boolean mouseRightPressed = false;
 	   
 	   private static final Controller instance = new Controller();
 	   
@@ -94,6 +97,41 @@ public class Controller implements KeyListener {
 	
 	}
 
+	@Override
+	public void mouseClicked(MouseEvent e) {
+
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		System.out.println(e.getButton());
+		switch (e.getButton() ) {
+			case MouseEvent.BUTTON1:setMouseLeftPressed(true); break;
+			case MouseEvent.BUTTON3:setMouseRightPressed(true); break;
+			default:
+				break;
+		}
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		switch (e.getButton() ) {
+			case MouseEvent.BUTTON1:setMouseLeftPressed(false); break;
+			case MouseEvent.BUTTON3:setMouseRightPressed(false); break;
+			default:
+				break;
+		}
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+
+	}
 
 
 	public boolean isKeyAPressed() {
@@ -148,6 +186,20 @@ public class Controller implements KeyListener {
 	public boolean isKeyRPressed() { return KeyRPressed; }
 
 	public void setKeyRPressed(boolean keyRPressed) { KeyRPressed = keyRPressed;}
+
+	public boolean isMouseRightPressed() { return mouseRightPressed; }
+
+	public void setMouseRightPressed(boolean mouseRightPressed) { this.mouseRightPressed = mouseRightPressed; }
+
+	public boolean isMouseLeftPressed() { return mouseLeftPressed; }
+
+	public void setMouseLeftPressed(boolean mouseLeftPressed) { this.mouseLeftPressed = mouseLeftPressed ;}
+
+	public double getAngle(MouseEvent event, int x, int y) {
+		double xDist = (event.getX()-x);
+		double yDist = (event.getY()-y);
+		return (Math.atan2(yDist, xDist) ); // return the angle of the player object to the mouse
+	}
 }
 
 /*
