@@ -20,6 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 import util.GameObject;
+import util.Revolver;
 
 
 /*
@@ -100,7 +101,8 @@ public class Viewer extends JPanel implements MouseMotionListener {
 
 		//Draw player
 		drawPlayer(x, y, width, height, texture,g);
-		drawHUD(gameworld.getAmmo(), gameworld.getCapacity(), g);
+		drawHUD(gameworld.getRevolver(), g);
+
 
 		//Draw Bullets 
 		// change back 
@@ -179,7 +181,7 @@ public class Viewer extends JPanel implements MouseMotionListener {
 			//int currentPositionInAnimation= ((int) ((CurrentAnimationTime%40)/10))*32; //slows down animation so every 10 frames we get another frame so every 100ms
 			graphics2D.rotate(imageAngleRad);
 			graphics2D.translate(-x, -y);
-			graphics2D.drawImage(myImage, x,y, x+width, y+height,  null);
+			graphics2D.drawImage(myImage, x,y, 100, 100,  null);
 			graphics2D.setTransform(oldAT);
 
 			//credit to this stack overflow for showing how to do mouse following
@@ -197,11 +199,19 @@ public class Viewer extends JPanel implements MouseMotionListener {
 		
 	}
 
-	private void drawHUD(int ammo, int capacity, Graphics g) {
+	private void drawHUD(Revolver revolver, Graphics g) {
 		Font font = new Font("Courier", Font.BOLD, 20);
 		g.setFont(font);
 		g.setColor(Color.white);
-		g.drawString((ammo + " / " + capacity), 940, 950);
+		g.drawString((revolver.getAmmo() + " / " + revolver.getCapacity() ), 940, 950);
+
+		if (revolver.isCocked() )
+			g.setColor(Color.white);
+		else
+			g.setColor(Color.red);
+
+		g.drawString("Fire", 900, 950);
+
 	}
 
 

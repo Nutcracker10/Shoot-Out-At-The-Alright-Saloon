@@ -43,7 +43,7 @@ public class Model {
 	public Model() {
 		 //setup game world 
 		//Player 
-		Player= new GameObject("res/player.png",50,50,new Point3f(500,500,0));
+		Player= new GameObject("res/player.png",10,10,new Point3f(500,500,0));
 		revolver = new Revolver();
 		//Enemies  starting with four
 		EnemiesList.add(new GameObject("res/UFO.png",50,50,new Point3f(((float)Math.random()*50+400 ),0,0))); 
@@ -149,7 +149,6 @@ public class Model {
 			if (revolver.canfire()) { // check if there are bullets to shoot
 				CreateBullet();
 				revolver.fired(); // reduce ammo count
-				ammo = revolver.getAmmo(); // report ammo to HUD
 			}
 			Controller.getInstance().setMouseLeftPressed(false);
 		}
@@ -161,7 +160,6 @@ public class Model {
 
 		if (Controller.getInstance().isKeyRPressed() ) {
 			revolver.reload(); // add one bullet back to ammo
-			ammo = revolver.getAmmo();
 			Controller.getInstance().setKeyRPressed(false);
 		}
 		
@@ -187,11 +185,10 @@ public class Model {
 		return Score;
 	}
 
-	public int getAmmo() {
-		return ammo;
+	public Revolver getRevolver() {
+		return revolver;
 	}
 
-	public int getCapacity() { return revolver.getCapacity(); }
 
 }
 
