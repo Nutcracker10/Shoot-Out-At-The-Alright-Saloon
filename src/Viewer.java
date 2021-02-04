@@ -10,6 +10,7 @@ import java.awt.image.ImageObserver;
 import java.awt.image.RenderedImage;
 import java.awt.image.renderable.RenderableImage;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.AttributedCharacterIterator;
 import java.util.Iterator;
@@ -199,17 +200,20 @@ public class Viewer extends JPanel implements MouseMotionListener {
 	}
 
 	private void drawHUD(Revolver revolver, Graphics g) {
+
 		Font font = new Font("Courier", Font.BOLD, 20);
+
 		g.setFont(font);
 		g.setColor(Color.white);
 		g.drawString((revolver.getAmmo() + " / " + revolver.getCapacity() ), 940, 950);
 
-		if (revolver.isCocked() )
+		if (revolver.isCocked() ) {
 			g.setColor(Color.white);
+		}
 		else
 			g.setColor(Color.red);
 
-		g.drawString("Fire", 900, 950);
+		g.drawString("Fire", 895, 950);
 
 	}
 
