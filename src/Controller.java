@@ -104,7 +104,6 @@ public class Controller implements KeyListener, MouseListener {
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		System.out.println(e.getButton());
 		switch (e.getButton() ) {
 			case MouseEvent.BUTTON1:setMouseLeftPressed(true); break;
 			case MouseEvent.BUTTON3:setMouseRightPressed(true); break;
@@ -196,53 +195,3 @@ public class Controller implements KeyListener, MouseListener {
 	public void setMouseLeftPressed(boolean mouseLeftPressed) { this.mouseLeftPressed = mouseLeftPressed ;}
 
 }
-
-/*
- * 
- * KEYBOARD :-) . can you add a mouse or a gamepad 
-
- *@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ @@@@@@@@@@@@@@@
-
-  @@@     @@@@    @@@@    @@@@    @@@@     @@@     @@@     @@@     @@@     @@@  
-
-  @@@     @@@     @@@     @@@@     @@@     @@@     @@@     @@@     @@@     @@@  
-
-  @@@     @@@     @@@     @@@@    @@@@     @@@     @@@     @@@     @@@     @@@  
-
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-
-@     @@@     @@@     @@@      @@      @@@     @@@     @@@     @@@     @@@     @
-
-@     @@@   W   @@@     @@@      @@      @@@     @@@     @@@     @@@     @@@     @
-
-@@    @@@@     @@@@    @@@@    @@@@    @@@@     @@@     @@@     @@@     @@@     @
-
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@N@@@@@@@@@@@@@@@@@@@@@@@@@@@
-
-@@@     @@@      @@      @@      @@      @@@     @@@     @@@     @@@     @@@    
-
-@@@   A   @@@  S     @@  D     @@      @@@     @@@     @@@     @@@     @@@     @@@    
-
-@@@@ @  @@@@@@@@@@@@ @@@@@@@    @@@@@@@@@@@@    @@@@@@@@@@@@     @@@@   @@@@@   
-
-    @@@     @@@@    @@@@    @@@@    $@@@     @@@     @@@     @@@     @@@     @@@
-
-    @@@ $   @@@      @@      @@ /Q   @@ ]M   @@@     @@@     @@@     @@@     @@@
-
-    @@@     @@@      @@      @@      @@      @@@     @@@     @@@     @@@     @@@
-
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-
-@       @@@                                                @@@       @@@       @
-
-@       @@@              SPACE KEY       @@@        @@ PQ     
-
-@       @@@                                                @@@        @@        
-
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
- * 
- * 
- * 
- * 
- * 
- */

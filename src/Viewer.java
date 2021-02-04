@@ -51,7 +51,6 @@ SOFTWARE.
  */ 
 public class Viewer extends JPanel implements MouseMotionListener {
 	private long CurrentAnimationTime= 0; 
-	
 	Model gameworld =new Model();
 	private double imageAngleRad = 0;
 	 
@@ -181,7 +180,7 @@ public class Viewer extends JPanel implements MouseMotionListener {
 			//int currentPositionInAnimation= ((int) ((CurrentAnimationTime%40)/10))*32; //slows down animation so every 10 frames we get another frame so every 100ms
 			graphics2D.rotate(imageAngleRad+1.5708); //1.5708 is 90 degrees in radian
 			graphics2D.translate(-x, -y);
-			graphics2D.drawImage(myImage, x-40, y-40, 80, 80,  null);
+			graphics2D.drawImage(myImage, x-40, y-40, width, height,  null);
 			graphics2D.setTransform(oldAT);
 
 			//credit to this stack overflow for showing how to do mouse following
@@ -222,13 +221,14 @@ public class Viewer extends JPanel implements MouseMotionListener {
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		double xDist = (e.getX()-gameworld.getPlayer().getCentre().getX());
-		double yDist = (e.getY()-gameworld.getPlayer().getCentre().getY());
-		imageAngleRad = Math.atan2(yDist, xDist);
+		imageAngleRad = getMouseAngle(e);
 		repaint();
 	}
 
-	public double mousePosition(MouseEvent e) {
-		return 0.;
+	public double getMouseAngle(MouseEvent e) {
+		double xDist = (e.getX()-gameworld.getPlayer().getCentre().getX());
+		double yDist = (e.getY()-gameworld.getPlayer().getCentre().getY());
+		double angle = Math.atan2(yDist, xDist);
+		return  angle;
 	}
 }
