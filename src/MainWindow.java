@@ -135,9 +135,6 @@ public class MainWindow {
 		//score update  
 		 frame.setTitle("Score =  "+ gameworld.getScore());
 
-		 //TODO display capacity
-
-		
 		 
 	}
 
