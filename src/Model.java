@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Random;
@@ -110,8 +111,18 @@ public class Model {
 		for (GameObject temp : BulletList) 
 		{
 		    //check to move them
-			  
-			temp.getCentre().ApplyVector(new Vector3f(0,3,0));
+
+			//get the direction of the mouse from the player
+			Point point = MouseInfo.getPointerInfo().getLocation();
+			float x = (float)(point.getX() - Player.getCentre().getX() );
+			float y = (float)(point.getY() - Player.getCentre().getY() * - 1 );
+
+			float max = Math.max(Math.abs(x), Math.abs(y) );
+
+			//System.out.println("Player X: " + Player.getCentre().getX() + " Mouse X: " + point.getX());
+
+			//temp.getCentre().ApplyVector(new Vector3f(0,3,0));
+			temp.getCentre().ApplyVector(new Vector3f((x/max)*8, (y/max)*8,0));
 			//see if they hit anything 
 			
 			//see if they get to the top of the screen ( remember 0 is the top 
