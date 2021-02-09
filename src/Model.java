@@ -4,10 +4,8 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import util.GameObject;
-import util.Point3f;
-import util.Vector3f;
-import util.Revolver;
+import util.*;
+
 /*
  * Created by Abraham Campbell on 15/01/2020.
  *   Copyright (c) 2020  Abraham Campbell
@@ -37,7 +35,8 @@ public class Model {
 	 private  GameObject Player;
 	 private Revolver revolver;
 	 private  CopyOnWriteArrayList<GameObject> EnemiesList  = new CopyOnWriteArrayList<GameObject>();
-	 private  CopyOnWriteArrayList<GameObject> BulletList  = new CopyOnWriteArrayList<GameObject>();
+	 //private  CopyOnWriteArrayList<GameObject> BulletList  = new CopyOnWriteArrayList<GameObject>();
+	private CopyOnWriteArrayList<Bullet> BulletList = new CopyOnWriteArrayList<>();
 	 private int Score=0;
 
 	public Model() {
@@ -108,26 +107,14 @@ public class Model {
 		// TODO Auto-generated method stub
 		// move bullets 
 	  
-		for (GameObject temp : BulletList) 
-		{
+		for (Bullet temp : BulletList) {
 		    //check to move them
-
-			//get the direction of the mouse from the player
-			Point point = MouseInfo.getPointerInfo().getLocation();
-			float x = (float)(point.getX() - Player.getCentre().getX() );
-			float y = (float)(point.getY() - Player.getCentre().getY() * - 1 );
-
-			float max = Math.max(Math.abs(x), Math.abs(y) );
-
-			//System.out.println("Player X: " + Player.getCentre().getX() + " Mouse X: " + point.getX());
-
+			temp.update();
 			//temp.getCentre().ApplyVector(new Vector3f(0,3,0));
-			temp.getCentre().ApplyVector(new Vector3f((x/max)*8, (y/max)*8,0));
 			//see if they hit anything 
 			
 			//see if they get to the top of the screen ( remember 0 is the top 
-			if (temp.getCentre().getY()==0)
-			{
+			if (temp.getCentre().getY()==0 || temp.getCentre().getY()==1000 || temp.getCentre().getX()==0 || temp.getCentre().getX()==1000 ) {
 			 	BulletList.remove(temp);
 			}
 		} 
@@ -156,9 +143,9 @@ public class Model {
 		}
 
 		if(Controller.getInstance().isMouseLeftPressed()) {
-			if (revolver.canfire()) { // check if there are bullets to shoot
+			if (revolver.canfire()) { // check if there are bullets to shoot and if hammer is cocked
 				CreateBullet();
-				revolver.fired(); // reduce ammo count
+				revolver.fired(); // reduce ammo count and decock hammer
 			}
 			Controller.getInstance().setMouseLeftPressed(false);
 		}
@@ -176,7 +163,10 @@ public class Model {
 	}
 
 	private void CreateBullet() {
-		BulletList.add(new GameObject("res/Bullet.png",16,32, new Point3f(Player.getCentre().getX(),Player.getCentre().getY(),0.0f)));
+		//BulletList.add(new GameObject("res/Bullet.png",16,32, new Point3f(Player.getCentre().getX(),Player.getCentre().getY(),0.0f)));
+		Point point = MouseInfo.getPointerInfo().getLocation();
+		Bullet bullet = new Bullet(point.getX(), point.getY(), Player.getCentre().getX(), Player.getCentre().getY() );
+		BulletList.add(bullet);
 	}
 
 	public GameObject getPlayer() {
@@ -187,7 +177,7 @@ public class Model {
 		return EnemiesList;
 	}
 	
-	public CopyOnWriteArrayList<GameObject> getBullets() {
+	public CopyOnWriteArrayList<Bullet> getBullets() {
 		return BulletList;
 	}
 

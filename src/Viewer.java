@@ -20,6 +20,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import util.Bullet;
 import util.GameObject;
 import util.Revolver;
 
@@ -108,7 +109,7 @@ public class Viewer extends JPanel implements MouseMotionListener {
 		// change back 
 		gameworld.getBullets().forEach((temp) -> 
 		{ 
-			drawBullet((int) temp.getCentre().getX(), (int) temp.getCentre().getY(), (int) temp.getWidth(), (int) temp.getHeight(), temp.getTexture(),g);	 
+			drawBullet(temp, g);
 		}); 
 		
 		//Draw Enemies   
@@ -147,10 +148,11 @@ public class Viewer extends JPanel implements MouseMotionListener {
 			e.printStackTrace();
 		}
 	}
-	
-	private void drawBullet(int x, int y, int width, int height, String texture,Graphics g)
+
+	//private void drawBullet(int x, int y, int width, int height, String texture,Graphics g)
+	private void drawBullet(Bullet bullet, Graphics g)
 	{
-		File TextureToLoad = new File(texture);  //should work okay on OSX and Linux but check if you have issues depending your eclipse install or if your running this without an IDE 
+		/*File TextureToLoad = new File(texture);  //should work okay on OSX and Linux but check if you have issues depending your eclipse install or if your running this without an IDE
 		try {
 			Image myImage = ImageIO.read(TextureToLoad); 
 			//64 by 128 
@@ -160,6 +162,8 @@ public class Viewer extends JPanel implements MouseMotionListener {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		*/
+		 bullet.draw(g);
 	}
 	
 

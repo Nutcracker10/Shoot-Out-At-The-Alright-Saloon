@@ -15,11 +15,11 @@ public class Bullet extends GameObject {
 
     public Bullet() { }
 
-    public Bullet (float mX, float mY, float pX, float pY) {
+    public Bullet (double mX, double mY, double x, double y) {
         this.mX = mX;
         this.mY = mY;
-        this.x = pX;
-        this.y = pY;
+        this.x = x;
+        this.y = y;
 
         //lets do some 'trigger'-nometry ;)
         this.angle = Math.atan2(mY, mX);
