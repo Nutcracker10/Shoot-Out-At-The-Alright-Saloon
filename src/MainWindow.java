@@ -135,7 +135,9 @@ public class MainWindow {
 		//score update  
 		 frame.setTitle("Score =  "+ gameworld.getScore());
 
+		 // get relevant info for shooting
 		 gameworld.setPoint(canvas.getMousePosition());
+		 gameworld.setAngle(canvas.getImageAngleRad());
 		 
 	}
 

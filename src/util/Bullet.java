@@ -8,29 +8,20 @@ import java.io.IOException;
 
 public class Bullet extends GameObject {
     private double x, y; // current position of bullet
-    private double angle, velocity; // an arrow with both direction and magnitude - Vector, Despicable Me
+    private double velocity; // an arrow with both direction and magnitude - Vector, Despicable Me
     private double dX, dY; // our scalars
     private BufferedImage image;
-    private BufferedImage defaultImage;
 
-
-    public Bullet (double mX, double mY, double x, double y) {
+    public Bullet (double mX, double mY, double x, double y, double angle, double velocity) {
 
         super();
 
-        this.dX = Math.cos(mX);
-        this.dY = Math.sin(mY);
+        this.velocity = velocity;
+
+        this.dX = Math.cos(angle);
+        this.dY = Math.sin(angle);
         this.x = x;
         this.y = y;
-
-        //lets do some 'trigger'-nometry ;)
-        this.angle = Math.atan2(mY, mX);
-
-        try
-        {
-            defaultImage = ImageIO.read(new File("res/blankSprite.png") );
-        } catch (IOException e) { e.printStackTrace(); }
-
 
         try {
             image = ImageIO.read(new File("res/bullet.png") );
@@ -44,7 +35,16 @@ public class Bullet extends GameObject {
     }
 
     public void update() {
-        this.x += dX;
-        this.y += dY;
+        this.x += (dX*velocity);
+        this.y += (dY*velocity);
+    }
+
+    //for testing purposes
+    public double getX() {
+        return x;
+    }
+
+    public double getY() {
+        return y;
     }
 }

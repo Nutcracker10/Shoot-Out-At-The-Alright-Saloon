@@ -238,5 +238,7 @@ public class Viewer extends JPanel implements MouseMotionListener {
 		return  angle;
 	}
 
+	public double getImageAngleRad() { return this.imageAngleRad; }
+
 
 }
