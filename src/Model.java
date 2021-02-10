@@ -159,7 +159,10 @@ public class Model {
 		}
 
 		if (Controller.getInstance().isKeyRPressed() ) {
-			revolver.reload(); // add one bullet back to ammo
+			if (revolver.isCocked() == false ){
+				playSound("res/revolver_reload.wav");
+				revolver.reload(); // add one bullet back to ammo
+			}
 			Controller.getInstance().setKeyRPressed(false);
 		}
 		
