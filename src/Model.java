@@ -1,10 +1,15 @@
 import java.awt.*;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import util.*;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 
 /*
  * Created by Abraham Campbell on 15/01/2020.
@@ -71,9 +76,9 @@ public class Model {
 		// using enhanced for-loop style as it makes it alot easier both code wise and reading wise too 
 		for (GameObject temp : EnemiesList) 
 		{
-			for (GameObject Bullet : BulletList) {
-				if ( Math.abs(temp.getCentre().getX()- Bullet.getCentre().getX())< temp.getWidth()
-					&& Math.abs(temp.getCentre().getY()- Bullet.getCentre().getY()) < temp.getHeight())
+			for (Bullet Bullet : BulletList) {
+				if ( Math.abs(temp.getCentre().getX()- Bullet.getX())< temp.getWidth()
+					&& Math.abs(temp.getCentre().getY()- Bullet.getY()) < temp.getHeight())
 				{
 					EnemiesList.remove(temp);
 					BulletList.remove(Bullet);
@@ -140,6 +145,7 @@ public class Model {
 
 		if(Controller.getInstance().isMouseLeftPressed()) {
 			if (revolver.canfire()) { // check if there are bullets to shoot and if hammer is cocked
+				playSound("res/revolver_shot.wav");
 				CreateBullet();
 				revolver.fired(); // reduce ammo count and decock hammer
 			}
@@ -193,6 +199,14 @@ public class Model {
 		this.angleToMouse = angle;
 	}
 
+	public void playSound(String path) {
+		try {
+			AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(path).getAbsoluteFile());
+			Clip clip = AudioSystem.getClip();
+			clip.open(audioInputStream);
+			clip.start();
+		}catch (Exception e) { e.printStackTrace(); }
+	}
 }
 
 
