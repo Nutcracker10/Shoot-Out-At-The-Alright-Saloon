@@ -83,8 +83,6 @@ public class Viewer extends JPanel implements MouseMotionListener {
 		
 	}
 
-
-	
 	public void paintComponent(Graphics g) {
 		
 		super.paintComponent(g);
@@ -106,9 +104,9 @@ public class Viewer extends JPanel implements MouseMotionListener {
 
 
 		//Draw Bullets 
-		// change back 
+		// change back
 		gameworld.getBullets().forEach((temp) -> 
-		{ 
+		{
 			drawBullet(temp, g);
 		}); 
 		
@@ -239,4 +237,6 @@ public class Viewer extends JPanel implements MouseMotionListener {
 		double angle = Math.atan2(yDist, xDist);
 		return  angle;
 	}
+
+
 }

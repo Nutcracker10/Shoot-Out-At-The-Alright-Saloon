@@ -35,8 +35,9 @@ public class Model {
 	 private  GameObject Player;
 	 private Revolver revolver;
 	 private  CopyOnWriteArrayList<GameObject> EnemiesList  = new CopyOnWriteArrayList<GameObject>();
-	 //private  CopyOnWriteArrayList<GameObject> BulletList  = new CopyOnWriteArrayList<GameObject>();
-	private CopyOnWriteArrayList<Bullet> BulletList = new CopyOnWriteArrayList<>();
+	 private  Controller controller = new Controller();
+	 private CopyOnWriteArrayList<Bullet> BulletList = new CopyOnWriteArrayList<>();
+	 private Point mousePos = new Point();
 	 private int Score=0;
 
 	public Model() {
@@ -105,18 +106,17 @@ public class Model {
 
 	private void bulletLogic() {
 		// TODO Auto-generated method stub
-		// move bullets 
-	  
+		// move bullets
 		for (Bullet temp : BulletList) {
 		    //check to move them
 			temp.update();
 			//temp.getCentre().ApplyVector(new Vector3f(0,3,0));
 			//see if they hit anything 
-			
-			//see if they get to the top of the screen ( remember 0 is the top 
-			if (temp.getCentre().getY()==0 || temp.getCentre().getY()==1000 || temp.getCentre().getX()==0 || temp.getCentre().getX()==1000 ) {
-			 	BulletList.remove(temp);
-			}
+
+			//see if they get to the top of the screen ( remember 0 is the top
+//			if (temp.getCentre().getY()==0 || temp.getCentre().getY()==1000 || temp.getCentre().getX()==0 || temp.getCentre().getX()==1000 ) {
+//			 	BulletList.remove(temp);
+//			}
 		} 
 		
 	}
@@ -164,8 +164,9 @@ public class Model {
 
 	private void CreateBullet() {
 		//BulletList.add(new GameObject("res/Bullet.png",16,32, new Point3f(Player.getCentre().getX(),Player.getCentre().getY(),0.0f)));
-		Point point = MouseInfo.getPointerInfo().getLocation();
-		Bullet bullet = new Bullet(point.getX(), point.getY(), Player.getCentre().getX(), Player.getCentre().getY() );
+		System.out.print("Mouse X: + " + mousePos.getX() + " Mouse Y: " + mousePos.getY() );
+		Bullet bullet = new Bullet(mousePos.getX(), mousePos.getY(), Player.getCentre().getX(), Player.getCentre().getY() );
+		//System.out.println("About to add bullet to list");
 		BulletList.add(bullet);
 	}
 
@@ -189,6 +190,9 @@ public class Model {
 		return revolver;
 	}
 
+	public void setPoint(Point point) {
+		this.mousePos = point;
+	}
 
 }
 

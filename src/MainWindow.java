@@ -47,8 +47,8 @@ public class MainWindow {
 	 private static JFrame frame = new JFrame("Game");   // Change to the name of your game
 	 private static Model gameworld= new Model();
 	 private static Viewer canvas = new  Viewer( gameworld);
-	 private KeyListener Controller =new Controller()  ;
-	 private MouseListener Mouse = new Controller();
+	 private static KeyListener Controller =new Controller()  ;
+	 private static MouseListener Mouse = new Controller();
 	 private static int TargetFPS = 100;
 	 private static boolean startGame= false; 
 	 private JLabel BackgroundImageForStartMenu ;
@@ -135,6 +135,7 @@ public class MainWindow {
 		//score update  
 		 frame.setTitle("Score =  "+ gameworld.getScore());
 
+		 gameworld.setPoint(canvas.getMousePosition());
 		 
 	}
 

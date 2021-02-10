@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -42,11 +43,10 @@ public class Controller implements KeyListener, MouseListener {
 
 	private static boolean mouseLeftPressed = false;
 	private static boolean mouseRightPressed = false;
+
+	private static final Controller instance = new Controller();
 	   
-	   private static final Controller instance = new Controller();
-	   
-	 public Controller() { 
-	 }
+	 public Controller() { }
 	 
 	 public static Controller getInstance(){
 	        return instance;
@@ -105,7 +105,7 @@ public class Controller implements KeyListener, MouseListener {
 	@Override
 	public void mousePressed(MouseEvent e) {
 		switch (e.getButton() ) {
-			case MouseEvent.BUTTON1:setMouseLeftPressed(true); break;
+			case MouseEvent.BUTTON1: setMouseLeftPressed(true); break;
 			case MouseEvent.BUTTON3:setMouseRightPressed(true); break;
 			default:
 				break;
