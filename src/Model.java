@@ -153,6 +153,7 @@ public class Model {
 		}
 
 		if ( Controller.getInstance().isMouseRightPressed() ) {
+			playSound("res/revolver_cocked.wav");
 			revolver.cockHammer(); // ready to pew
 			Controller.getInstance().setMouseRightPressed(false);
 		}
