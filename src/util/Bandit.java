@@ -1,10 +1,12 @@
 package util;
 
+import java.awt.*;
 import java.util.Random;
 
 public class Bandit {
-    private boolean isHit = false;
-    double x,y, mX, mY;
+    private boolean hitStatus = false;
+    double x,y;
+    Point move = new Point(); // where to move to
 
     public Bandit(double x, double y) {
         this.x = x;
@@ -16,6 +18,7 @@ public class Bandit {
         double randomX = (Math.random() * (upper - lower + 1 ) + lower);
         double randomY = (Math.random() * (upper - lower + 1 ) + lower);
 
+        move.setLocation(randomX, randomY);
 
     }
 
@@ -27,12 +30,11 @@ public class Bandit {
 
     public double getY() { return this.y; }
 
-    public void setmX(double mX) { this.mX = mX; }
+    public void setMove(Point point) { this.move = point; }
 
-    public double getmX() { return this.mX; }
+    public Point getMove() { return move; }
 
-    public void setmY(double mY) { this.mY = mY; }
+    public void setHitStatus(boolean hit) { hitStatus = hit; }
 
-    public double getmY() { return mY; }
-
+    public boolean isHitStatus() { return hitStatus; }
 }

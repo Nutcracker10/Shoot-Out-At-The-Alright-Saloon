@@ -31,7 +31,7 @@ public class Bullet extends GameObject {
 
 
     public void draw(Graphics g) {
-        g.drawImage(image, (int)x, (int)y, 16, 32, null);
+        g.drawImage(image, (int)x, (int)y, 25, 25, null);
     }
 
     public void update() {
