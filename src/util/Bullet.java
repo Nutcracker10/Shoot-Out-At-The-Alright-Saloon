@@ -12,7 +12,7 @@ public class Bullet extends GameObject {
     private double dX, dY; // our scalars
     private BufferedImage image;
 
-    public Bullet (double mX, double mY, double x, double y, double angle, double velocity) {
+    public Bullet (double x, double y, double angle, double velocity) {
 
         super();
 

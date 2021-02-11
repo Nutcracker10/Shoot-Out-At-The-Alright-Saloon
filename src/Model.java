@@ -152,6 +152,11 @@ public class Model {
 			Controller.getInstance().setMouseLeftPressed(false);
 		}
 
+		if (Controller.getInstance().isKeySpacePressed()) {
+			//TODO Add dash feature
+			Controller.getInstance().setKeySpacePressed(false);
+		}
+
 		if ( Controller.getInstance().isMouseRightPressed() ) {
 			if (revolver.isCocked() == false) {
 				playSound("res/revolver_cocked.wav");
@@ -172,7 +177,7 @@ public class Model {
 
 	private void CreateBullet() {
 		//BulletList.add(new GameObject("res/Bullet.png",16,32, new Point3f(Player.getCentre().getX(),Player.getCentre().getY(),0.0f)));
-		Bullet bullet = new Bullet(mousePos.getX(), mousePos.getY(), Player.getCentre().getX(), Player.getCentre().getY(), angleToMouse, 10 );
+		Bullet bullet = new Bullet(Player.getCentre().getX(), Player.getCentre().getY(), angleToMouse, 10 );
 		//System.out.println("About to add bullet to list");
 		BulletList.add(bullet);
 	}
