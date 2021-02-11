@@ -24,7 +24,7 @@ public class Bandit {
 
     public void findMove() {
         //bounds for number generation
-        int max = 5;
+        int max = 50;
         double min = 25;
 
         double destX, destY;
@@ -35,12 +35,9 @@ public class Bandit {
 
         //get our X coord
         if (destX == 0.0 || destX >= min) {
+            // 0 allows for horizontal / vertical only movement
             if (destY == 0.0 ) {
                 destX += min;
-            }
-            //decide if its a positive or negative coord
-            if (rand.nextInt(1) == 0){
-                destX = (destX * -1.0) ;
             }
         }
         // ensure we move min distance
@@ -48,17 +45,22 @@ public class Bandit {
             destX += (min -1 ) ;
         }
 
+        //decide if its a positive or negative coord
+        if (rand.nextInt(1) == 0){
+            destX = (destX * -1.0) ;
+        }
 
+        // Repeat for Y
         if (destY == 0.0 || destY >= min) {
             if (destX == 0.0) {
                 destY += min;
             }
-
-            if (rand.nextInt(1) == 0) {
-                destY = (destY * -1);
-            }
         } else if (destY < min) {
             destY += (min - 1) ;
+        }
+
+        if (rand.nextInt(1) == 0) {
+            destY = (destY * -1);
         }
 
         // make coords relative to bandit
