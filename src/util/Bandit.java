@@ -6,7 +6,7 @@ import java.util.Random;
 public class Bandit {
     private boolean hitStatus = false;
     private double x,y, dX, dY;
-    private double angle, velocity;
+    private double velocity;
     private int difficulty;
     private Point move = new Point(); // where to move to
 
@@ -15,7 +15,7 @@ public class Bandit {
         this.y = y;
         this.difficulty = difficulty;
 
-        switch (difficulty) {
+        switch (difficulty) { // difficulty affects velocity
             case 1: this.velocity = 2.5; break;
             case 2: this.velocity = 5.0; break;
             case 3: this.velocity = 10.0; break;
@@ -23,16 +23,51 @@ public class Bandit {
     }
 
     public void findMove() {
-        double upper = 50.0, lower = 25.0; // bounds for random generation
-        double randomX = (Math.random() * (upper - lower + 1 ) + lower);
-        double randomY = (Math.random() * (upper - lower + 1 ) + lower);
+        //bounds for number generation
+        int max = 5;
+        double min = 25;
 
-        move.setLocation(randomX, randomY);
+        double destX, destY;
+        Random rand = new Random();
+
+        destX = (double) rand.nextInt(max+1);
+        destY = (double) rand.nextInt(max+1);
+
+        //get our X coord
+        if (destX == 0.0 || destX >= min) {
+            if (destY == 0.0 ) {
+                destX += min;
+            }
+            //decide if its a positive or negative coord
+            if (rand.nextInt(1) == 0){
+                destX = (destX * -1.0) ;
+            }
+        }
+        // ensure we move min distance
+        else if (destX < min) {
+            destX += (min -1 ) ;
+        }
+
+
+        if (destY == 0.0 || destY >= min) {
+            if (destX == 0.0) {
+                destY += min;
+            }
+
+            if (rand.nextInt(1) == 0) {
+                destY = (destY * -1);
+            }
+        } else if (destY < min) {
+            destY += (min - 1) ;
+        }
+
+        // make coords relative to bandit
+        move.setLocation((destX + this.x), (destY + this.y));
         calcAngle(); // figure out how to move
     }
 
     public void calcAngle() {
-        angle = Math.atan2((move.getX() - x ), (move.getY() - y ));
+        double angle = Math.atan2((move.getX() - x ), (move.getY() - y ));
 
         dX = Math.cos(angle);
         dY = Math.sin(angle);
@@ -44,14 +79,18 @@ public class Bandit {
             findMove();
             return;
         }
-
-        this.x += (dX * velocity);
-        this.y += (dY * velocity);
+        // move the bandit
+        this.x += (dX * 3);
+        this.y += (dY * 3);
     }
 
-    public Bullet fireBullet() {
-        return  ( new Bullet(this.x, this.y, this.angle, this.velocity) );
+    public double calcAngleToPlayer(double pX, double pY) {
+        return 0.0;
     }
+
+//    public Bullet fireBullet() {
+//        return  ( new Bullet(this.x, this.y, this.angle, this.velocity) );
+//    }
 
     public void setX(double x) { this.x = x; }
 

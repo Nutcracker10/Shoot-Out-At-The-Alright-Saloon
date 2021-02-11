@@ -18,8 +18,10 @@ public class Bullet extends GameObject {
 
         this.velocity = velocity;
 
+        //calculate our movement directions
         this.dX = Math.cos(angle);
         this.dY = Math.sin(angle);
+
         this.x = x;
         this.y = y;
 

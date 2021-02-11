@@ -175,6 +175,7 @@ public class Viewer extends JPanel implements MouseMotionListener {
 			);
 
 			BufferedImage myImage = ImageIO.read(TextureToLoad);
+			// centre of object
 			int cx = myImage.getWidth() / 2;
 			int cy = myImage.getHeight() / 2;
 			AffineTransform oldAT = graphics2D.getTransform();
