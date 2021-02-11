@@ -153,13 +153,15 @@ public class Model {
 		}
 
 		if ( Controller.getInstance().isMouseRightPressed() ) {
-			playSound("res/revolver_cocked.wav");
-			revolver.cockHammer(); // ready to pew
+			if (revolver.isCocked() == false) {
+				playSound("res/revolver_cocked.wav");
+				revolver.cockHammer(); // ready to pew
+			}
 			Controller.getInstance().setMouseRightPressed(false);
 		}
 
 		if (Controller.getInstance().isKeyRPressed() ) {
-			if (revolver.isCocked() == false ){
+			if (revolver.getAmmo() < revolver.getCapacity() ){
 				playSound("res/revolver_reload.wav");
 				revolver.reload(); // add one bullet back to ammo
 			}
