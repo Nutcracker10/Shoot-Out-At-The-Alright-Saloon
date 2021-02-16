@@ -52,10 +52,10 @@ public class Model {
 		Player= new GameObject("res/player.png",75,75,new Point3f(500,500,0));
 		revolver = new Revolver();
 		//Enemies  starting with four
-		EnemiesList.add(new GameObject("res/UFO.png",50,50,new Point3f(((float)Math.random()*50+400 ),0,0))); 
-		EnemiesList.add(new GameObject("res/UFO.png",50,50,new Point3f(((float)Math.random()*50+500 ),0,0)));
-		EnemiesList.add(new GameObject("res/UFO.png",50,50,new Point3f(((float)Math.random()*100+500 ),0,0)));
-		EnemiesList.add(new GameObject("res/UFO.png",50,50,new Point3f(((float)Math.random()*100+400 ),0,0)));
+//		EnemiesList.add(new GameObject("res/UFO.png",50,50,new Point3f(((float)Math.random()*50+400 ),0,0)));
+//		EnemiesList.add(new GameObject("res/UFO.png",50,50,new Point3f(((float)Math.random()*50+500 ),0,0)));
+//		EnemiesList.add(new GameObject("res/UFO.png",50,50,new Point3f(((float)Math.random()*100+500 ),0,0)));
+//		EnemiesList.add(new GameObject("res/UFO.png",50,50,new Point3f(((float)Math.random()*100+400 ),0,0)));
 	}
 	
 	// This is the heart of the game , where the model takes in all the inputs ,decides the outcomes and then changes the model accordingly. 
@@ -93,14 +93,14 @@ public class Model {
 		// TODO Auto-generated method stub
 		for (GameObject temp : EnemiesList) {
 		    // Move enemies
-			temp.getCentre().ApplyVector(new Vector3f(0,-1,0));
+			//temp.getCentre().ApplyVector(new Vector3f(0,-1,0));
 			//see if they get to the top of the screen ( remember 0 is the top 
-			if (temp.getCentre().getY()==900.0f)  // current boundary need to pass value to model 
-			{
-				EnemiesList.remove(temp);
-				// enemies win so score decreased 
-				Score--;
-			} 
+//			if (temp.getCentre().getY()==900.0f)  // current boundary need to pass value to model
+//			{
+//				EnemiesList.remove(temp);
+//				// enemies win so score decreased
+//				Score--;
+//			}
 		}
 		
 		if (EnemiesList.size()<2) {
