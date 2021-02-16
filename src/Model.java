@@ -39,7 +39,7 @@ public class Model {
 
 	 private  GameObject Player;
 	 private Revolver revolver;
-	 private  CopyOnWriteArrayList<GameObject> EnemiesList  = new CopyOnWriteArrayList<GameObject>();
+	 private  CopyOnWriteArrayList<Bandit> EnemiesList  = new CopyOnWriteArrayList<Bandit>();
 	 private  Controller controller = new Controller();
 	 private CopyOnWriteArrayList<Bullet> BulletList = new CopyOnWriteArrayList<>();
 	 private Point mousePos = new Point();
@@ -47,15 +47,10 @@ public class Model {
 	 private int Score=0;
 
 	public Model() {
-		 //setup game world 
-		//Player 
+		 //setup game world
 		Player= new GameObject("res/player.png",75,75,new Point3f(500,500,0));
 		revolver = new Revolver();
-		//Enemies  starting with four
-//		EnemiesList.add(new GameObject("res/UFO.png",50,50,new Point3f(((float)Math.random()*50+400 ),0,0)));
-//		EnemiesList.add(new GameObject("res/UFO.png",50,50,new Point3f(((float)Math.random()*50+500 ),0,0)));
-//		EnemiesList.add(new GameObject("res/UFO.png",50,50,new Point3f(((float)Math.random()*100+500 ),0,0)));
-//		EnemiesList.add(new GameObject("res/UFO.png",50,50,new Point3f(((float)Math.random()*100+400 ),0,0)));
+		EnemiesList.add(new Bandit(500., 500., 2));
 	}
 	
 	// This is the heart of the game , where the model takes in all the inputs ,decides the outcomes and then changes the model accordingly. 
@@ -74,24 +69,26 @@ public class Model {
 		// this is a way to increment across the array list data structure
 		//see if they hit anything 
 		// using enhanced for-loop style as it makes it alot easier both code wise and reading wise too 
-		for (GameObject temp : EnemiesList) 
+		for (Bandit temp : EnemiesList)
 		{
-			for (Bullet Bullet : BulletList) {
-				if ( Math.abs(temp.getCentre().getX()- Bullet.getX())< temp.getWidth()
-					&& Math.abs(temp.getCentre().getY()- Bullet.getY()) < temp.getHeight())
-				{
-					EnemiesList.remove(temp);
-					BulletList.remove(Bullet);
-					Score++;
-				}
-			}
+
+//			for (Bullet Bullet : BulletList) {
+//				break;
+//			}
 		}
 		
 	}
 
 	private void enemyLogic() {
 		// TODO Auto-generated method stub
-		for (GameObject temp : EnemiesList) {
+		for (Bandit bandit : EnemiesList) {
+
+			//remove the bandit when hit
+			if (bandit.isHitStatus() == true)
+				EnemiesList.remove(bandit);
+
+			bandit.update();
+
 		    // Move enemies
 			//temp.getCentre().ApplyVector(new Vector3f(0,-1,0));
 			//see if they get to the top of the screen ( remember 0 is the top 
@@ -105,7 +102,8 @@ public class Model {
 		
 		if (EnemiesList.size()<2) {
 			while (EnemiesList.size()<6) {
-				EnemiesList.add(new GameObject("res/UFO.png",50,50,new Point3f(((float)Math.random()*1000),0,0))); 
+				//EnemiesList.add(new GameObject("res/UFO.png",50,50,new Point3f(((float)Math.random()*1000),0,0)));
+				EnemiesList.add(new Bandit(500., 500., 2));
 			}
 		}
 	}
@@ -186,7 +184,7 @@ public class Model {
 		return Player;
 	}
 
-	public CopyOnWriteArrayList<GameObject> getEnemies() {
+	public CopyOnWriteArrayList<Bandit> getEnemies() {
 		return EnemiesList;
 	}
 	

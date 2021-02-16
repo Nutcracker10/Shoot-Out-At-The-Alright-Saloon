@@ -1,6 +1,10 @@
 package util;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.Random;
 
 public class Bandit {
@@ -9,6 +13,7 @@ public class Bandit {
     private double velocity;
     private int difficulty;
     private Point move = new Point(); // where to move to
+    private BufferedImage image;
 
     public Bandit(double x, double y, int difficulty) {
         this.x = x;
@@ -20,12 +25,20 @@ public class Bandit {
             case 2: this.velocity = 5.0; break;
             case 3: this.velocity = 10.0; break;
         }
+
+        try {
+            image = ImageIO.read(new File("res/Bandit.png") );
+        } catch (IOException e) { e.printStackTrace(); }
+
+        this.findMove();
     }
+
+    public void draw(Graphics g) { g.drawImage(image, (int)x, (int)y, 50, 50, null); }
 
     public void findMove() {
         //bounds for number generation
-        int max = 50;
-        double min = 25;
+        int max = 5;
+        double min = 2;
 
         double destX, destY;
         Random rand = new Random();
