@@ -11,12 +11,14 @@ public class Bullet extends GameObject {
     private double velocity; // an arrow with both direction and magnitude - Vector, Despicable Me
     private double dX, dY; // our scalars
     private BufferedImage image;
+    private String origin; // what created the bullet
 
-    public Bullet (double x, double y, double angle, double velocity) {
+    public Bullet (double x, double y, double angle, double velocity, String origin) {
 
         super();
 
         this.velocity = velocity;
+        this.origin = origin;
 
         //calculate our movement directions
         this.dX = Math.cos(angle);
@@ -49,4 +51,6 @@ public class Bullet extends GameObject {
     public double getY() {
         return y;
     }
+
+    public String getOrigin() { return origin; }
 }

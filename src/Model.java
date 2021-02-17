@@ -175,7 +175,7 @@ public class Model {
 
 	private void CreateBullet() {
 		//BulletList.add(new GameObject("res/Bullet.png",16,32, new Point3f(Player.getCentre().getX(),Player.getCentre().getY(),0.0f)));
-		Bullet bullet = new Bullet(Player.getCentre().getX(), Player.getCentre().getY(), angleToMouse, 10 );
+		Bullet bullet = new Bullet(Player.getCentre().getX(), Player.getCentre().getY(), angleToMouse, 10, "Player" );
 		//System.out.println("About to add bullet to list");
 		BulletList.add(bullet);
 	}
