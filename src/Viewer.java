@@ -115,12 +115,12 @@ public class Viewer extends JPanel implements MouseMotionListener {
 		gameworld.getEnemies().forEach((temp) -> 
 		{
 			//drawEnemies((int) temp.getCentre().getX(), (int) temp.getCentre().getY(), (int) temp.getWidth(), (int) temp.getHeight(), temp.getTexture(),g);
-		 	drawEnemies(temp, g);
+		 	drawEnemies(temp, g, x, y);
 	    });
 	}
 	
-	private void drawEnemies(Bandit bandit, Graphics g) {
-		bandit.draw(g);
+	private void drawEnemies(Bandit bandit, Graphics g, int pX, int pY) {
+		bandit.draw(g, pX, pY);
 	}
 
 	private void drawBackground(Graphics g)

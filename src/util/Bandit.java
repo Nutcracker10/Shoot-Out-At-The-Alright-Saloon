@@ -2,6 +2,7 @@ package util;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -32,14 +33,44 @@ public class Bandit {
             case 3: this.velocity = 10.0; break;
         }
 
-        try {
-            image = ImageIO.read(new File("res/Bandit.png") );
-        } catch (IOException e) { e.printStackTrace(); }
-
         this.findMove();
     }
 
-    public void draw(Graphics g) { g.drawImage(image, (int)x, (int)y, 75, 75, null); }
+    public void draw(Graphics g, int pX, int pY) {
+
+        double angle = Math.atan2(pY - this.y, pX - this.x);
+
+        try {
+            Graphics2D graphics2D = (Graphics2D)g;
+            graphics2D.setRenderingHint(
+                    RenderingHints.KEY_RENDERING,
+                    RenderingHints.VALUE_RENDER_QUALITY
+            );
+
+            BufferedImage myImage = ImageIO.read(new File("res/Bandit.png"));
+            // centre of object
+            int cx = myImage.getWidth() / 2;
+            int cy = myImage.getHeight() / 2;
+            AffineTransform oldAT = graphics2D.getTransform();
+            graphics2D.translate(cx+x, cy+y);
+
+            //int currentPositionInAnimation= ((int) ((CurrentAnimationTime%40)/10))*32; //slows down animation so every 10 frames we get another frame so every 100ms
+            graphics2D.rotate(angle+1.5708); //1.5708 is 90 degrees in radian
+            graphics2D.translate(-x, -y);
+            graphics2D.drawImage(myImage, (int)x-35, (int)y-35, 75, 75,  null);
+            graphics2D.setTransform(oldAT);
+
+            //credit to this stack overflow for showing how to do mouse following
+            //https://stackoverflow.com/questions/26607930/java-rotate-image-towards-mouse-position
+
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        g.drawImage(image, (int)x, (int)y, 75, 75, null);
+
+    }
 
     public void findMove() {
         //bounds for number generation
@@ -66,11 +97,6 @@ public class Bandit {
         if (rand.nextInt(2) == 0){
             destX = (destX * -1.0) ;
         }
-
-//        // check if we're in the boundary
-//        if (destX < 0 || destX > 900) {
-//            destX = (destX * -1.0) ;
- //       }
 
         // Repeat for Y
         if (destY == 0.0 || destY >= min) {
@@ -117,11 +143,11 @@ public class Bandit {
 
     }
 
-      // Bandit Bullet BS
-//    public double calcAngleToPlayer(double pX, double pY) {
-//      double angle = Math.atan2((move.getX() - x ), (move.getY() - y ));
-//        return 0.0;
-//    }
+       //Bandit Bullet BS
+    public double calcAngleToPlayer(double pX, double pY) {
+      double angle = Math.atan2((move.getX() - x ), (move.getY() - y ));
+        return 0.0;
+    }
 //
 //    public Bullet fireBullet() {
 //        return  ( new Bullet(this.x, this.y, this.angle, this.velocity, "Bandit") );
