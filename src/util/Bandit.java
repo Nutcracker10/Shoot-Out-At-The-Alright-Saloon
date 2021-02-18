@@ -5,6 +5,8 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
@@ -15,8 +17,9 @@ public class Bandit {
     private int difficulty;
     private Point move = new Point(); // where to move to
     private BufferedImage image;
-    private double range = 250.0; // movement range
+    private double range = 200.0; // movement range
     private double distMoved = 0.0;
+    private double banditSpeed = 2.0;
 
     public Bandit(double x, double y, int difficulty) {
         this.x = x;
@@ -40,8 +43,8 @@ public class Bandit {
 
     public void findMove() {
         //bounds for number generation
-        int max = 5;
-        double min = 2;
+        int max = 100;
+        double min = 25.0;
 
         double destX, destY;
         Random rand = new Random();
@@ -50,11 +53,9 @@ public class Bandit {
         destY = (double) rand.nextInt(max+1);
 
         //get our X coord
-        if (destX == 0.0 || destX >= min) {
+        if (destX == 0.0 && destY == 0.0 ) {
             // 0 allows for horizontal / vertical only movement
-            if (destY == 0.0 ) {
-                destX += min;
-            }
+            destX += min;
         }
         // ensure we move min distance
         else if (destX < min) {
@@ -62,9 +63,14 @@ public class Bandit {
         }
 
         //decide if its a positive or negative coord
-        if (rand.nextInt(1) == 0){
+        if (rand.nextInt(2) == 0){
             destX = (destX * -1.0) ;
         }
+
+//        // check if we're in the boundary
+//        if (destX < 0 || destX > 900) {
+//            destX = (destX * -1.0) ;
+ //       }
 
         // Repeat for Y
         if (destY == 0.0 || destY >= min) {
@@ -75,20 +81,18 @@ public class Bandit {
             destY += (min - 1) ;
         }
 
-        if (rand.nextInt(1) == 0) {
+        if (rand.nextInt(2) == 0) {
             destY = (destY * -1);
         }
+        //System.out.println("Y: " + destY + "X: " + destX);
 
         // make coords relative to bandit
         move.setLocation((destX + this.x), (destY + this.y));
         calcAngle(); // figure out how to move
-
-        System.out.println("Moving to " + move);
     }
 
     public void calcAngle() {
         double angle = Math.atan2((move.getX() - x ), (move.getY() - y ));
-
         dX = Math.cos(angle);
         dY = Math.sin(angle);
     }
@@ -96,21 +100,21 @@ public class Bandit {
     public void update() {
 
         double oldX = this.x, oldY = this.y;
-
         // move the bandit
-        this.x += (dX * 2.);
-        this.y += (dY * 2.);
+        if (this.outOfBounds() == true) {
+            findMove();
+        }
+        this.x += (dX * banditSpeed);
+        this.y += (dY * banditSpeed);
 
         //check if bandit has moved enough
         if (distMoved > range) {
             distMoved = 0.0;
-            System.out.println("distMoved outpaced range");
-
             findMove();
-        } else {
-            distMoved += ( ( (this.x - oldX) + (this.y - oldY) )  *-1) / 2.0;
-            //System.out.println("Moved: " + distMoved);
+        } else { // get distance from last move
+            distMoved += Math.sqrt( Math.pow( (this.x - oldX), 2.0) + Math.pow( (this.y - oldY), 2.0 )  );
         }
+
     }
 
       // Bandit Bullet BS
@@ -122,6 +126,14 @@ public class Bandit {
 //    public Bullet fireBullet() {
 //        return  ( new Bullet(this.x, this.y, this.angle, this.velocity, "Bandit") );
 //    }
+
+
+    public boolean outOfBounds () {
+        if ( (this.x + (dX*banditSpeed) ) < 0.0 || (this.x + (dX*banditSpeed) ) > 900.0 || (this.y + (dY*banditSpeed) ) < 0.0 || ( this.y + (dY*banditSpeed) ) > 900.0) {
+            return true;
+        } else
+            return false;
+    }
 
     public void setX(double x) { this.x = x; }
 

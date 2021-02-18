@@ -1,6 +1,7 @@
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -87,6 +88,7 @@ public class Model {
 			if (bandit.isHitStatus() == true)
 				EnemiesList.remove(bandit);
 
+			Instant now = Instant.now();
 			bandit.update();
 
 		    // Move enemies
@@ -116,6 +118,10 @@ public class Model {
 			temp.update();
 
 			//TODO figure out collisions to remove bullets
+
+			if (temp.getY() < 0.0) {
+				BulletList.remove(temp);
+			}
 		} 
 		
 	}
