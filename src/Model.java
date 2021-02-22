@@ -72,10 +72,13 @@ public class Model {
 		// using enhanced for-loop style as it makes it alot easier both code wise and reading wise too 
 		for (Bandit temp : EnemiesList)
 		{
-
-//			for (Bullet Bullet : BulletList) {
-//				break;
-//			}
+			for (Bullet bullet : BulletList) {
+				if (Math.abs(temp.getX() - bullet.getX()) < temp.getWidth()
+						&& Math.abs(temp.getY()- bullet.getY()) < temp.getHeight() ) {
+					EnemiesList.remove(temp);
+					BulletList.remove(bullet);
+				}
+			}
 		}
 		
 	}
@@ -88,8 +91,7 @@ public class Model {
 			if (bandit.isHitStatus() == true)
 				EnemiesList.remove(bandit);
 
-			Instant now = Instant.now();
-			bandit.update();
+			bandit.update(Player.getCentre().getX(), Player.getCentre().getY() );
 
 		    // Move enemies
 			//temp.getCentre().ApplyVector(new Vector3f(0,-1,0));
@@ -102,12 +104,12 @@ public class Model {
 //			}
 		}
 		
-		if (EnemiesList.size()<2) {
-			while (EnemiesList.size()<6) {
-				//EnemiesList.add(new GameObject("res/UFO.png",50,50,new Point3f(((float)Math.random()*1000),0,0)));
-				EnemiesList.add(new Bandit(500., 500., 2));
-			}
-		}
+//		if (EnemiesList.size()<2) {
+//			while (EnemiesList.size()<6) {
+//				//EnemiesList.add(new GameObject("res/UFO.png",50,50,new Point3f(((float)Math.random()*1000),0,0)));
+//				EnemiesList.add(new Bandit(500., 500., 2));
+//			}
+//		}
 	}
 
 	private void bulletLogic() {

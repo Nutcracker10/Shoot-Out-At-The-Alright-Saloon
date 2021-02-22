@@ -16,6 +16,7 @@ public class Bandit {
     private double x,y, dX, dY;
     private double velocity;
     private int difficulty;
+    private int width=75, height=75;
     private Point move = new Point(); // where to move to
     private BufferedImage image;
     private double range = 200.0; // movement range
@@ -39,7 +40,6 @@ public class Bandit {
     public void draw(Graphics g, int pX, int pY) {
 
         double angle = Math.atan2(pY - this.y, pX - this.x);
-
         try {
             Graphics2D graphics2D = (Graphics2D)g;
             graphics2D.setRenderingHint(
@@ -57,7 +57,7 @@ public class Bandit {
             //int currentPositionInAnimation= ((int) ((CurrentAnimationTime%40)/10))*32; //slows down animation so every 10 frames we get another frame so every 100ms
             graphics2D.rotate(angle+1.5708); //1.5708 is 90 degrees in radian
             graphics2D.translate(-x, -y);
-            graphics2D.drawImage(myImage, (int)x-35, (int)y-35, 75, 75,  null);
+            graphics2D.drawImage(myImage, (int)x-35, (int)y-35, width, height,  null);
             graphics2D.setTransform(oldAT);
 
             //credit to this stack overflow for showing how to do mouse following
@@ -123,7 +123,7 @@ public class Bandit {
         dY = Math.sin(angle);
     }
 
-    public void update() {
+    public void update(float pX, float pY) {
 
         double oldX = this.x, oldY = this.y;
         // move the bandit
@@ -143,15 +143,10 @@ public class Bandit {
 
     }
 
-       //Bandit Bullet BS
-    public double calcAngleToPlayer(double pX, double pY) {
-      double angle = Math.atan2((move.getX() - x ), (move.getY() - y ));
-        return 0.0;
+    public Bullet fireBullet(int pX, int pY) {
+        double angle = Math.atan2((move.getX() - x ), (move.getY() - y ));
+        return  ( new Bullet(this.x, this.y, angle, this.velocity, "Bandit") );
     }
-//
-//    public Bullet fireBullet() {
-//        return  ( new Bullet(this.x, this.y, this.angle, this.velocity, "Bandit") );
-//    }
 
 
     public boolean outOfBounds () {
@@ -175,5 +170,10 @@ public class Bandit {
 
     public void setHitStatus(boolean hit) { hitStatus = hit; }
 
+    public int getWidth() { return width; }
+
+    public int getHeight() { return height; }
+
     public boolean isHitStatus() { return hitStatus; }
+
 }
