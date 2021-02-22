@@ -38,14 +38,16 @@ SOFTWARE.
  */ 
 public class Model {
 
-	 private  GameObject Player;
+	 private GameObject Player;
 	 private Revolver revolver;
-	 private  CopyOnWriteArrayList<Bandit> EnemiesList  = new CopyOnWriteArrayList<Bandit>();
-	 private  Controller controller = new Controller();
+	 private CopyOnWriteArrayList<Bandit> EnemiesList  = new CopyOnWriteArrayList<Bandit>();
+	 private Controller controller = new Controller();
 	 private CopyOnWriteArrayList<Bullet> BulletList = new CopyOnWriteArrayList<>();
+	 private CopyOnWriteArrayList<Bullet> EnemyBullet = new CopyOnWriteArrayList<>();
 	 private Point mousePos = new Point();
 	 private double angleToMouse;
 	 private int Score=0;
+	 private int Health = 3;
 
 	public Model() {
 		 //setup game world
@@ -73,8 +75,9 @@ public class Model {
 		for (Bandit temp : EnemiesList)
 		{
 			for (Bullet bullet : BulletList) {
-				if (Math.abs(temp.getX() - bullet.getX()) < temp.getWidth()
-						&& Math.abs(temp.getY()- bullet.getY()) < temp.getHeight() ) {
+				if  (Math.abs(temp.getX() - bullet.getX()) < temp.getWidth()
+						&& Math.abs(temp.getY()- bullet.getY()) < temp.getHeight()
+							&& (bullet.getOrigin().equals("Player")) )  {
 					EnemiesList.remove(temp);
 					BulletList.remove(bullet);
 				}
@@ -86,22 +89,11 @@ public class Model {
 	private void enemyLogic() {
 		// TODO Auto-generated method stub
 		for (Bandit bandit : EnemiesList) {
+			bandit.update(Player.getCentre().getX(), Player.getCentre().getY());
 
-			//remove the bandit when hit
-			if (bandit.isHitStatus() == true)
-				EnemiesList.remove(bandit);
-
-			bandit.update(Player.getCentre().getX(), Player.getCentre().getY() );
-
-		    // Move enemies
-			//temp.getCentre().ApplyVector(new Vector3f(0,-1,0));
-			//see if they get to the top of the screen ( remember 0 is the top 
-//			if (temp.getCentre().getY()==900.0f)  // current boundary need to pass value to model
-//			{
-//				EnemiesList.remove(temp);
-//				// enemies win so score decreased
-//				Score--;
-//			}
+			if (bandit.isMoveFound() == true) {
+				EnemyBullet.add(bandit.fireBullet(Player.getCentre().getX(), Player.getCentre().getY() ));
+			}
 		}
 		
 //		if (EnemiesList.size()<2) {
@@ -124,7 +116,11 @@ public class Model {
 			if (temp.getY() < 0.0) {
 				BulletList.remove(temp);
 			}
-		} 
+		}
+
+		for (Bullet bullet : EnemyBullet) {
+			bullet.update();
+		}
 		
 	}
 
@@ -183,9 +179,9 @@ public class Model {
 
 	private void CreateBullet() {
 		//BulletList.add(new GameObject("res/Bullet.png",16,32, new Point3f(Player.getCentre().getX(),Player.getCentre().getY(),0.0f)));
-		Bullet bullet = new Bullet(Player.getCentre().getX(), Player.getCentre().getY(), angleToMouse, 10, "Player" );
+		Bullet bullet = new Bullet(Player.getCentre().getX(), Player.getCentre().getY(), angleToMouse, 10, "Player");
 		//System.out.println("About to add bullet to list");
-		BulletList.add(bullet);
+			BulletList.add(bullet);
 	}
 
 	public GameObject getPlayer() {
