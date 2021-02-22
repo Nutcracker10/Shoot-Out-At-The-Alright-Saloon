@@ -109,7 +109,12 @@ public class Viewer extends JPanel implements MouseMotionListener {
 		gameworld.getBullets().forEach((temp) -> 
 		{
 			drawBullet(temp, g);
-		}); 
+		});
+
+		gameworld.getEnemyBullet().forEach((temp) ->
+		{
+			drawBullet(temp, g);
+		});
 		
 		//Draw Enemies   
 		gameworld.getEnemies().forEach((temp) -> 

@@ -47,7 +47,7 @@ public class Model {
 	 private Point mousePos = new Point();
 	 private double angleToMouse;
 	 private int Score=0;
-	 private int Health = 3;
+	 private int health = 3;
 
 	public Model() {
 		 //setup game world
@@ -83,6 +83,18 @@ public class Model {
 				}
 			}
 		}
+
+		for (Bullet eBullet : EnemyBullet) {
+			if  (Math.abs(Player.getCentre().getX() - eBullet.getX()) < Player.getWidth()
+					&& Math.abs(Player.getCentre().getY()- eBullet.getY()) < Player.getHeight()
+					&& (eBullet.getOrigin().equals("Bandit")) )  {
+				health --;
+				if (health <= 0) {
+					//TODO create game over state
+				}
+				EnemyBullet.remove(eBullet);
+			}
+		}
 		
 	}
 
@@ -91,7 +103,7 @@ public class Model {
 		for (Bandit bandit : EnemiesList) {
 			bandit.update(Player.getCentre().getX(), Player.getCentre().getY());
 
-			if (bandit.isMoveFound() == true) {
+			if (bandit.isMoveReached() == true) {
 				EnemyBullet.add(bandit.fireBullet(Player.getCentre().getX(), Player.getCentre().getY() ));
 			}
 		}
@@ -118,8 +130,14 @@ public class Model {
 			}
 		}
 
+		System.out.println("Size: " + EnemyBullet.size());
+
 		for (Bullet bullet : EnemyBullet) {
 			bullet.update();
+
+			if (bullet.getY() < 0.0) {
+				BulletList.remove(bullet);
+			}
 		}
 		
 	}
@@ -127,7 +145,7 @@ public class Model {
 	private void playerLogic() {
 		
 		// smoother animation is possible if we make a target position  // done but may try to change things for students
-		//check for movement and if you fired a bullet 
+		//check for movement and if you fired a bullet
 		  
 		if(Controller.getInstance().isKeyAPressed()){
 			Player.getCentre().ApplyVector( new Vector3f(-2,0,0));
@@ -194,6 +212,10 @@ public class Model {
 	
 	public CopyOnWriteArrayList<Bullet> getBullets() {
 		return BulletList;
+	}
+
+	public CopyOnWriteArrayList<Bullet> getEnemyBullet() {
+		return EnemyBullet;
 	}
 
 	public int getScore() { 

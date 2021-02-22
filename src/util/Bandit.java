@@ -21,7 +21,7 @@ public class Bandit {
     private double range = 200.0; // movement range
     private double distMoved = 0.0;
     private double banditSpeed = 2.0;
-    private boolean moveFound = false;
+    private boolean moveReached = false;
 
     public Bandit(double x, double y, int difficulty) {
         this.x = x;
@@ -126,7 +126,7 @@ public class Bandit {
     public void update(float pX, float pY) {
 
         double oldX = this.x, oldY = this.y;
-        moveFound = false;
+        moveReached = false;
         // move the bandit
         if (this.outOfBounds() == true) {
             findMove();
@@ -137,8 +137,8 @@ public class Bandit {
         //check if bandit has moved enough
         if (distMoved > range) {
             distMoved = 0.0;
+            moveReached = true;
             findMove();
-            moveFound = true;
         } else { // get distance from last move
             distMoved += Math.sqrt( Math.pow( (this.x - oldX), 2.0) + Math.pow( (this.y - oldY), 2.0 )  );
         }
@@ -164,6 +164,6 @@ public class Bandit {
 
     public int getHeight() { return height; }
 
-    public boolean isMoveFound() { return moveFound; }
+    public boolean isMoveReached() { return moveReached; }
 
 }
