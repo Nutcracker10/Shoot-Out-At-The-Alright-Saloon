@@ -130,8 +130,6 @@ public class Model {
 			}
 		}
 
-		System.out.println("Size: " + EnemyBullet.size());
-
 		for (Bullet bullet : EnemyBullet) {
 			bullet.update();
 
@@ -242,6 +240,8 @@ public class Model {
 			clip.start();
 		}catch (Exception e) { e.printStackTrace(); }
 	}
+
+	public int getHealth() { return health; }
 }
 
 

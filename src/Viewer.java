@@ -212,6 +212,10 @@ public class Viewer extends JPanel implements MouseMotionListener {
 
 		g.drawString("Fire", 895, 950);
 
+		g.setColor(Color.white);
+
+		g.drawString("HP: " + gameworld.getHealth(), 830, 950);
+
 	}
 
 
