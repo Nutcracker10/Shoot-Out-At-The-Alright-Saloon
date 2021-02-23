@@ -47,8 +47,20 @@ public class Door {
         this.y = point.getY();
     }
 
-    public void setX(double x) { this.x = x; }
+    public String getPos() {
+        Point point = new Point((int)this.x, (int)this.y);
+        String toReturn = "";
 
-    public void setY(double y) { this.y = y; }
+        // cant use switch here coz of object passing :(
+        if ((this.x == 500) && (this.y == 0)) { toReturn = "North"; }
+
+        else if ((this.x == 500) && (this.y == 1000)) { toReturn = "South"; }
+
+        else if ((this.x == 1000) && (this.y == 500)) { toReturn = "East"; }
+
+        else if ((this.x == 0) && (this.y == 500)) { toReturn = "North"; }
+
+        return toReturn;
+    }
 
 }

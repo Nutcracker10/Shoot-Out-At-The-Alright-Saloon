@@ -8,19 +8,47 @@ public class Room {
     private ArrayList<Door> doorList = new ArrayList<>();
     private String doorPos;
     private int x, y;
+    private boolean hostileRoom;
 
     private Point North = new Point(500, 0);
     private Point South = new Point(500, 1000);
     private Point East = new Point(1000, 500);
     private Point West = new Point(0, 500);
 
+    public  Room() {
+        //Add a door to the north wall if no specification given
+        Door door = new Door();
+        door.setPos(North);
+        doorList.add(door);
+    }
+
     public Room(String doorPos) {
         this.doorPos = doorPos;
-        findDoorPlacement();
+        Door door1 = new Door();
+
+        switch (doorPos) {
+            case "North":
+                door1.setPos(North);
+                break;
+
+            case "South":
+                door1.setPos(South);
+                break;
+
+            case "East":
+                door1.setPos(East);
+                break;
+
+            case "West":
+                door1.setPos(West);
+                break;
+        }
+        doorList.add(door1);
+        doorList.add(findOtherDoorPlacement());
 
     }
 
-    private Door findDoorPlacement() {
+    private Door findOtherDoorPlacement() {
 
         Door door = new Door();
         int random;
@@ -74,5 +102,11 @@ public class Room {
                 break;
         }
         return door;
+    }
+
+    public ArrayList<Door> getDoorList() { return this.doorList; }
+
+    public String getLastDoor() {
+        return this.doorList.get(doorList.size() - 1 ).getPos();
     }
 }
