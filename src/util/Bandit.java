@@ -123,7 +123,7 @@ public class Bandit {
         dY = Math.sin(angle);
     }
 
-    public void update(float pX, float pY) {
+    public void update() {
 
         double oldX = this.x, oldY = this.y;
         moveReached = false;

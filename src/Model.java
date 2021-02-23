@@ -101,7 +101,7 @@ public class Model {
 	private void enemyLogic() {
 		// TODO Auto-generated method stub
 		for (Bandit bandit : EnemiesList) {
-			bandit.update(Player.getCentre().getX(), Player.getCentre().getY());
+			bandit.update();
 
 			if (bandit.isMoveReached() == true) {
 				EnemyBullet.add(bandit.fireBullet(Player.getCentre().getX(), Player.getCentre().getY() ));
