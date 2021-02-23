@@ -7,7 +7,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class Door {
-    private int x, y;
+    private double x, y;
     private int height =80, width = 80;
     private boolean isOpen = false;
     private BufferedImage image;
@@ -35,11 +35,20 @@ public class Door {
     }
 
     public void draw(Graphics g) {
-        g.drawImage(image, x, y, width, height, null);
+        g.drawImage(image, (int)x, (int)y, width, height, null);
     }
 
     public void setOpen(boolean isOpen) { this.isOpen = isOpen ;}
 
     public boolean isOpen() { return this.isOpen; }
+
+    public void setPos(Point point) {
+        this.x = point.getX();
+        this.y = point.getY();
+    }
+
+    public void setX(double x) { this.x = x; }
+
+    public void setY(double y) { this.y = y; }
 
 }
