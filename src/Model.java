@@ -40,6 +40,7 @@ public class Model {
 
 	 private GameObject Player;
 	 private Revolver revolver;
+	 private Layer layer = new Layer();
 	 private CopyOnWriteArrayList<Bandit> EnemiesList  = new CopyOnWriteArrayList<Bandit>();
 	 private Controller controller = new Controller();
 	 private CopyOnWriteArrayList<Bullet> BulletList = new CopyOnWriteArrayList<>();

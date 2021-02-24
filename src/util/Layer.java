@@ -8,14 +8,15 @@ public class Layer {
     public Layer () {
         int roomLimit = 5;
 
-        int index = 0;
         while (roomList.size() < roomLimit) {
 
             if (roomList.size() == 0) {
                 Room room = new Room();
+                roomList.add(room);
             } else {
                 //find previous door and create new room relative entry
                 Room room = new Room(roomList.get(roomList.size()-1).getLastDoor());
+                roomList.add(room);
             }
         }
     }
@@ -24,7 +25,7 @@ public class Layer {
         return roomList;
     }
 
-    public void addRoom(Room room, int index) {
+    public void addRoomAtIndex(Room room, int index) {
         roomList.add(index, room);
     }
 }

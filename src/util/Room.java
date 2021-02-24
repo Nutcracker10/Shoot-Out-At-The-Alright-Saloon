@@ -20,6 +20,7 @@ public class Room {
         Door door = new Door();
         door.setPos(North);
         doorList.add(door);
+        hostileRoom = false;
     }
 
     public Room(String doorPos) {
@@ -45,6 +46,7 @@ public class Room {
         }
         doorList.add(door1);
         doorList.add(findOtherDoorPlacement());
+        hostileRoom = true;
 
     }
 

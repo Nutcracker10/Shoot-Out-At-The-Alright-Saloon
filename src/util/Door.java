@@ -48,7 +48,6 @@ public class Door {
     }
 
     public String getPos() {
-        Point point = new Point((int)this.x, (int)this.y);
         String toReturn = "";
 
         // cant use switch here coz of object passing :(
