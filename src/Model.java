@@ -40,7 +40,6 @@ public class Model {
 
 	 private GameObject Player;
 	 private Revolver revolver;
-	 private Layer layer = new Layer();
 	 private CopyOnWriteArrayList<Bandit> EnemiesList  = new CopyOnWriteArrayList<Bandit>();
 	 private Controller controller = new Controller();
 	 private CopyOnWriteArrayList<Bullet> BulletList = new CopyOnWriteArrayList<>();
@@ -240,6 +239,30 @@ public class Model {
 			clip.open(audioInputStream);
 			clip.start();
 		}catch (Exception e) { e.printStackTrace(); }
+	}
+
+	public void generateWave(String direction) {
+		int randomX, randomY;
+		switch (direction) {
+			case "North":
+				// TODO pick a point in a range on that side of the screen
+				randomX = (int) Math.random() * ( 900 - 100 + 1) + 100;
+				randomY = (int) Math.random() * (400 - 75 + 1) + 75;
+				break;
+			case "South":
+				randomX = (int) Math.random() * ( 900 - 100 + 1) + 100;
+				randomY = (int) Math.random() * (935 - 600 + 1) + 600;
+				break;
+			case "East":
+				randomX = (int) Math.random() * ( 935 - 600 + 1) + 600;
+				randomY = (int) Math.random() * (900 - 100 + 1) + 100;
+				break;
+			case "West":
+				randomX = (int) Math.random() * ( 400 - 75 + 1) + 75;
+				randomY = (int) Math.random() * ( 900 - 100 + 1) + 100;
+				break;
+		}
+
 	}
 
 	public int getHealth() { return health; }
