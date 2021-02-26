@@ -138,6 +138,10 @@ public class MainWindow {
 		 // get relevant info for shooting
 		 gameworld.setPoint(canvas.getMousePosition());
 		 gameworld.setAngle(canvas.getImageAngleRad());
+
+		 if (gameworld.isPlayerDead()) {
+		 	//TODO DIE!!!
+		 }
 		 
 	}
 

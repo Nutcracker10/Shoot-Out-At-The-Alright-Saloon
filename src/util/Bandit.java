@@ -145,7 +145,7 @@ public class Bandit {
     }
 
     public Bullet fireBullet(float pX, float pY) {
-        double angle = Math.atan2((pX - x ), (pY - y ));
+        double angle = Math.atan2((pY - this.y ), (pX - this.x ));
         return  ( new Bullet(this.x, this.y, angle, this.velocity, "Bandit") );
     }
 

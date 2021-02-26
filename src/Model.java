@@ -46,13 +46,16 @@ public class Model {
 	 private CopyOnWriteArrayList<Bullet> EnemyBullet = new CopyOnWriteArrayList<>();
 	 private Point mousePos = new Point();
 	 private double angleToMouse;
-	 private int Score=0;
+	 private int score=0;
 	 private int health = 3;
+	 private String direction;
+	 private boolean isPlayerDead = false;
 
 	public Model() {
 		 //setup game world
-		Player= new GameObject("res/player.png",75,75,new Point3f(500,500,0));
+		Player= new GameObject("res/player.png",75,75,new Point3f(500,700,0));
 		revolver = new Revolver();
+		direction = "North";
 		EnemiesList.add(new Bandit(500., 500., 2));
 	}
 	
@@ -69,9 +72,7 @@ public class Model {
 	}
 
 	private void gameLogic() {
-		// this is a way to increment across the array list data structure
-		//see if they hit anything 
-		// using enhanced for-loop style as it makes it alot easier both code wise and reading wise too 
+		//Enemy gets hit
 		for (Bandit temp : EnemiesList)
 		{
 			for (Bullet bullet : BulletList) {
@@ -80,10 +81,12 @@ public class Model {
 							&& (bullet.getOrigin().equals("Player")) )  {
 					EnemiesList.remove(temp);
 					BulletList.remove(bullet);
+					score++;
 				}
 			}
 		}
 
+		//Player gets hit
 		for (Bullet eBullet : EnemyBullet) {
 			if  (Math.abs(Player.getCentre().getX() - eBullet.getX()) < Player.getWidth()
 					&& Math.abs(Player.getCentre().getY()- eBullet.getY()) < Player.getHeight()
@@ -91,6 +94,7 @@ public class Model {
 				health --;
 				if (health <= 0) {
 					//TODO create game over state
+					isPlayerDead = true;
 				}
 				EnemyBullet.remove(eBullet);
 			}
@@ -108,12 +112,15 @@ public class Model {
 			}
 		}
 		
-//		if (EnemiesList.size()<2) {
-//			while (EnemiesList.size()<6) {
-//				//EnemiesList.add(new GameObject("res/UFO.png",50,50,new Point3f(((float)Math.random()*1000),0,0)));
-//				EnemiesList.add(new Bandit(500., 500., 2));
-//			}
-//		}
+		if (EnemiesList.size() == 0) {
+			this.pickDirection();
+			while (EnemiesList.size()<6) {
+				//EnemiesList.add(new GameObject("res/UFO.png",50,50,new Point3f(((float)Math.random()*1000),0,0)));
+				Point point = this.generateWave();
+
+				EnemiesList.add(new Bandit(point.getX(), point.getY(), 2));
+			}
+		}
 	}
 
 	private void bulletLogic() {
@@ -125,7 +132,7 @@ public class Model {
 
 			//TODO figure out collisions to remove bullets
 
-			if (temp.getY() < 0.0) {
+			if (temp.getY() < 0.0 || temp.getX() < 0. || temp.getY() > 1000 || temp.getX() > 1000) {
 				BulletList.remove(temp);
 			}
 		}
@@ -141,24 +148,25 @@ public class Model {
 	}
 
 	private void playerLogic() {
+		int speed = 3;
 		
 		// smoother animation is possible if we make a target position  // done but may try to change things for students
 		//check for movement and if you fired a bullet
 		  
 		if(Controller.getInstance().isKeyAPressed()){
-			Player.getCentre().ApplyVector( new Vector3f(-2,0,0));
+			Player.getCentre().ApplyVector( new Vector3f(-speed,0,0));
 		}
 		
 		if(Controller.getInstance().isKeyDPressed()) {
-			Player.getCentre().ApplyVector( new Vector3f(2,0,0));
+			Player.getCentre().ApplyVector( new Vector3f(speed,0,0));
 		}
 			
 		if(Controller.getInstance().isKeyWPressed()) {
-			Player.getCentre().ApplyVector( new Vector3f(0,2,0));
+			Player.getCentre().ApplyVector( new Vector3f(0,speed,0));
 		}
 		
 		if(Controller.getInstance().isKeySPressed()){
-			Player.getCentre().ApplyVector( new Vector3f(0,-2,0));
+			Player.getCentre().ApplyVector( new Vector3f(0,-speed,0));
 		}
 
 		if(Controller.getInstance().isMouseLeftPressed()) {
@@ -217,7 +225,7 @@ public class Model {
 	}
 
 	public int getScore() { 
-		return Score;
+		return score;
 	}
 
 	public Revolver getRevolver() {
@@ -241,31 +249,56 @@ public class Model {
 		}catch (Exception e) { e.printStackTrace(); }
 	}
 
-	public void generateWave(String direction) {
-		int randomX, randomY;
+	public Point generateWave() {
+		int randomX=0, randomY=0;
 		switch (direction) {
 			case "North":
 				// TODO pick a point in a range on that side of the screen
-				randomX = (int) Math.random() * ( 900 - 100 + 1) + 100;
-				randomY = (int) Math.random() * (400 - 75 + 1) + 75;
+				randomX = (int) (Math.random() * ( 900 - 100 + 1) + 100);
+				randomY = (int) (Math.random() * (400 - 75 + 1) + 75);
 				break;
 			case "South":
-				randomX = (int) Math.random() * ( 900 - 100 + 1) + 100;
-				randomY = (int) Math.random() * (935 - 600 + 1) + 600;
+				randomX = (int) (Math.random() * ( 900 - 100 + 1) + 100);
+				randomY = (int) (Math.random() * (935 - 600 + 1) + 600);
 				break;
 			case "East":
-				randomX = (int) Math.random() * ( 935 - 600 + 1) + 600;
-				randomY = (int) Math.random() * (900 - 100 + 1) + 100;
+				randomX = (int) (Math.random() * ( 935 - 600 + 1) + 600);
+				randomY = (int) (Math.random() * (900 - 100 + 1) + 100);
 				break;
 			case "West":
-				randomX = (int) Math.random() * ( 400 - 75 + 1) + 75;
-				randomY = (int) Math.random() * ( 900 - 100 + 1) + 100;
+				randomX = (int) (Math.random() * ( 400 - 75 + 1) + 75);
+				randomY = (int) (Math.random() * ( 900 - 100 + 1) + 100);
 				break;
 		}
 
+		return (new Point(randomX, randomY));
+	}
+
+	public void pickDirection() {
+		Random random = new Random();
+		int num = random.nextInt(4);
+
+		switch (num) {
+			case 0:
+				direction = "North";
+				break;
+			case 1:
+				direction = "South";
+				break;
+			case 2:
+				direction = "East";
+				break;
+			case 3:
+				direction = "West";
+				break;
+		}
 	}
 
 	public int getHealth() { return health; }
+
+	public String getDirection() { return this.direction; }
+
+	public boolean isPlayerDead() { return isPlayerDead; }
 }
 
 
