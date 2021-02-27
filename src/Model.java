@@ -47,7 +47,7 @@ public class Model {
 	 private Point mousePos = new Point();
 	 private double angleToMouse;
 	 private int score=0;
-	 private int health = 3;
+	 private int health = 5;
 	 private String direction;
 	 private boolean isPlayerDead = false;
 

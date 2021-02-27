@@ -50,8 +50,10 @@ public class MainWindow {
 	 private static KeyListener Controller =new Controller()  ;
 	 private static MouseListener Mouse = new Controller();
 	 private static int TargetFPS = 100;
-	 private static boolean startGame= false; 
-	 private JLabel BackgroundImageForStartMenu ;
+	 private static boolean startGame= false;
+	private static JLabel deathScreen;
+	private JLabel BackgroundImageForStartMenu;
+
 
 	public MainWindow() {
 	        frame.setSize(1000, 1000);  // you can customise this later and adapt it to change on size.  
@@ -109,6 +111,8 @@ public class MainWindow {
 			
 			if(startGame) {
 				 gameloop();
+				 if (gameworld.isPlayerDead())
+				 	break;
 			}
 
 			//UNIT test to see if framerate matches 
@@ -141,8 +145,25 @@ public class MainWindow {
 
 		 if (gameworld.isPlayerDead()) {
 		 	//TODO DIE!!!
+			 endState();
 		 }
 		 
+	}
+
+	private static void endState() {
+
+		File BackgroundToLoad = new File("res/Death_Screen.png");
+		try {
+
+			BufferedImage myPicture = ImageIO.read(BackgroundToLoad);
+			deathScreen = new JLabel(new ImageIcon(myPicture));
+			deathScreen.setBounds(0, 0, 1000, 1000);
+			canvas.setVisible(false);
+			frame.add(deathScreen);
+
+		}  catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 }
