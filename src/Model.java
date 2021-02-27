@@ -46,10 +46,9 @@ public class Model {
 	 private CopyOnWriteArrayList<Bullet> EnemyBullet = new CopyOnWriteArrayList<>();
 	 private Point mousePos = new Point();
 	 private double angleToMouse;
-	 private int score=0;
-	 private int health = 5;
+	 private int score=0, waveCount = 1, health =1;
 	 private String direction;
-	 private boolean isPlayerDead = false;
+	 private boolean isPlayerDead = false, generatingWave = false;
 
 	public Model() {
 		 //setup game world
@@ -115,11 +114,12 @@ public class Model {
 		if (EnemiesList.size() == 0) {
 			this.pickDirection();
 			while (EnemiesList.size()<6) {
-				//EnemiesList.add(new GameObject("res/UFO.png",50,50,new Point3f(((float)Math.random()*1000),0,0)));
+				generatingWave = true;
 				Point point = this.generateWave();
 
 				EnemiesList.add(new Bandit(point.getX(), point.getY(), 2));
 			}
+			generatingWave = false;
 		}
 	}
 
@@ -254,20 +254,20 @@ public class Model {
 		switch (direction) {
 			case "North":
 				// TODO pick a point in a range on that side of the screen
-				randomX = (int) (Math.random() * ( 900 - 100 + 1) + 100);
+				randomX = (int) (Math.random() * (900 - 100 + 1) + 100);
 				randomY = (int) (Math.random() * (400 - 75 + 1) + 75);
 				break;
 			case "South":
-				randomX = (int) (Math.random() * ( 900 - 100 + 1) + 100);
+				randomX = (int) (Math.random() * (900 - 100 + 1) + 100);
 				randomY = (int) (Math.random() * (935 - 600 + 1) + 600);
 				break;
 			case "East":
-				randomX = (int) (Math.random() * ( 935 - 600 + 1) + 600);
+				randomX = (int) (Math.random() * (935 - 600 + 1) + 600);
 				randomY = (int) (Math.random() * (900 - 100 + 1) + 100);
 				break;
 			case "West":
-				randomX = (int) (Math.random() * ( 400 - 75 + 1) + 75);
-				randomY = (int) (Math.random() * ( 900 - 100 + 1) + 100);
+				randomX = (int) (Math.random() * (400 - 75 + 1) + 75);
+				randomY = (int) (Math.random() * (900 - 100 + 1) + 100);
 				break;
 		}
 
@@ -297,6 +297,10 @@ public class Model {
 	public int getHealth() { return health; }
 
 	public String getDirection() { return this.direction; }
+
+	public boolean isGeneratingWave() {
+		return generatingWave;
+	}
 
 	public boolean isPlayerDead() { return isPlayerDead; }
 }

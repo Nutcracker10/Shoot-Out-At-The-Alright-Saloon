@@ -108,12 +108,14 @@ public class Viewer extends JPanel implements MouseMotionListener {
 		// change back
 		gameworld.getBullets().forEach((temp) -> 
 		{
-			drawBullet(temp, g);
+			//drawBullet(temp, g);
+			temp.draw(g);
 		});
 
 		gameworld.getEnemyBullet().forEach((temp) ->
 		{
-			drawBullet(temp, g);
+			//drawBullet(temp, g);
+			temp.draw(g);
 		});
 		
 		//Draw Enemies   
@@ -122,6 +124,10 @@ public class Viewer extends JPanel implements MouseMotionListener {
 			//drawEnemies((int) temp.getCentre().getX(), (int) temp.getCentre().getY(), (int) temp.getWidth(), (int) temp.getHeight(), temp.getTexture(),g);
 		 	drawEnemies(temp, g, x, y);
 	    });
+
+		if (gameworld.isGeneratingWave() == true) {
+			displayDirection(g);
+		}
 	}
 	
 	private void drawEnemies(Bandit bandit, Graphics g, int pX, int pY) {
@@ -141,24 +147,6 @@ public class Viewer extends JPanel implements MouseMotionListener {
 			e.printStackTrace();
 		}
 	}
-
-	//private void drawBullet(int x, int y, int width, int height, String texture,Graphics g)
-	private void drawBullet(Bullet bullet, Graphics g)
-	{
-		/*File TextureToLoad = new File(texture);  //should work okay on OSX and Linux but check if you have issues depending your eclipse install or if your running this without an IDE
-		try {
-			Image myImage = ImageIO.read(TextureToLoad); 
-			//64 by 128 
-			 g.drawImage(myImage, x,y, x+width, y+height, 0 , 0, 63, 127, null); 
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		*/
-		 bullet.draw(g);
-	}
-	
 
 	private void drawPlayer(int x, int y, int width, int height, String texture,Graphics g) { 
 		File TextureToLoad = new File(texture);  //should work okay on OSX and Linux but check if you have issues depending your eclipse install or if your running this without an IDE 
@@ -219,15 +207,20 @@ public class Viewer extends JPanel implements MouseMotionListener {
 
 	}
 
-	private void drawDoors() {
+	private void displayDirection(Graphics g) {
+		Font font = new Font("Courier", Font.BOLD, 50);
+		String direction = gameworld.getDirection();
 
+		g.setFont(font);
+		Timer timer = new Timer(3000, (e) -> {
+			g.drawString(("A wind blows from the " + direction + "..."), 500, 500);
+		});
+		timer.start();
 	}
 
 
 	@Override
-	public void mouseDragged(MouseEvent e) {
-
-	}
+	public void mouseDragged(MouseEvent e) { }
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
@@ -243,6 +236,5 @@ public class Viewer extends JPanel implements MouseMotionListener {
 	}
 
 	public double getImageAngleRad() { return this.imageAngleRad; }
-
 
 }

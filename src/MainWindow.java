@@ -44,7 +44,7 @@ SOFTWARE.
 
 
 public class MainWindow {
-	 private static JFrame frame = new JFrame("Game");   // Change to the name of your game
+	 private static JFrame frame = new JFrame("Shootout at the Alright Saloon");   // Change to the name of your game
 	 private static Model gameworld= new Model();
 	 private static Viewer canvas = new  Viewer( gameworld);
 	 private static KeyListener Controller =new Controller()  ;
@@ -52,7 +52,7 @@ public class MainWindow {
 	 private static int TargetFPS = 100;
 	 private static boolean startGame= false;
 	private static JLabel deathScreen;
-	private JLabel BackgroundImageForStartMenu;
+	private static JLabel BackgroundImageForStartMenu;
 
 
 	public MainWindow() {
@@ -112,7 +112,9 @@ public class MainWindow {
 			if(startGame) {
 				 gameloop();
 				 if (gameworld.isPlayerDead())
-				 	break;
+				 	hello = new MainWindow();
+				 	//reset();
+				 	//break;
 			}
 
 			//UNIT test to see if framerate matches 
@@ -151,7 +153,7 @@ public class MainWindow {
 	}
 
 	private static void endState() {
-
+		startGame = false;
 		File BackgroundToLoad = new File("res/Death_Screen.png");
 		try {
 
@@ -159,12 +161,34 @@ public class MainWindow {
 			deathScreen = new JLabel(new ImageIcon(myPicture));
 			deathScreen.setBounds(0, 0, 1000, 1000);
 			canvas.setVisible(false);
+
+//			JButton playAgainbtn = new JButton("Play Again");  // start button
+//			playAgainbtn.setBounds(400, 600, 200, 40);
+//
+//			deathScreen.add(playAgainbtn);
+//			playAgainbtn.addActionListener(new ActionListener() {
+//				@Override
+//				public void actionPerformed(ActionEvent e) {
+//					reset();
+//				}
+//			});
+
 			frame.add(deathScreen);
 
 		}  catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
+
+//	private static void reset() {
+//		frame = new JFrame("Shootout at the Alright Saloon");   // Change to the name of your game
+//		Model gameworld= new Model();
+//		Viewer canvas = new  Viewer( gameworld);
+//		KeyListener Controller =new Controller()  ;
+//		MouseListener Mouse = new Controller();
+//		TargetFPS = 100;
+//		startGame= false;
+//	}
 
 }
 
