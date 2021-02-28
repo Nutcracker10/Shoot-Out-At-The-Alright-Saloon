@@ -22,6 +22,8 @@ public class Bullet {
         this.dX = Math.cos(angle);
         this.dY = Math.sin(angle);
 
+        double centre = ((height + width) / 2);
+
         this.x = x;
         this.y = y;
 

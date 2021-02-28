@@ -121,17 +121,24 @@ public class Viewer extends JPanel implements MouseMotionListener {
 		//Draw Enemies   
 		gameworld.getEnemies().forEach((temp) -> 
 		{
-			//drawEnemies((int) temp.getCentre().getX(), (int) temp.getCentre().getY(), (int) temp.getWidth(), (int) temp.getHeight(), temp.getTexture(),g);
-		 	drawEnemies(temp, g, x, y);
+		 	temp.draw(g, x, y);
 	    });
 
 		if (gameworld.isGeneratingWave() == true) {
 			displayDirection(g);
 		}
+
+		gameworld.getStalls().forEach((stall) -> {
+			drawStall(g, stall);
+		});
 	}
-	
-	private void drawEnemies(Bandit bandit, Graphics g, int pX, int pY) {
-		bandit.draw(g, pX, pY);
+
+	private void drawStall(Graphics g, GameObject stall ) {
+		File toLoad = new File( stall.getTexture() );
+		try {
+			Image myImage = ImageIO.read(toLoad);
+			g.drawImage(myImage, (int)stall.getCentre().getX(), (int)stall.getCentre().getY(), stall.getWidth(), stall.getHeight(), null);
+		} catch (IOException e) { e.printStackTrace(); }
 	}
 
 	private void drawBackground(Graphics g)

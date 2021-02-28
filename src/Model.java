@@ -47,7 +47,7 @@ public class Model {
 	 private CopyOnWriteArrayList<GameObject> stalls = new CopyOnWriteArrayList<>();
 	 private Point mousePos = new Point();
 	 private double angleToMouse;
-	 private int score=0, waveCount = 1, health =1, difficulty=2;
+	 private int score=0, waveCount = 1, health =5, difficulty=2;
 	 private String direction;
 	 private boolean isPlayerDead = false, generatingWave = false;
 
@@ -56,9 +56,13 @@ public class Model {
 		Player= new GameObject("res/player.png",75,75,new Point3f(500,700,0));
 		revolver = new Revolver();
 		direction = "North";
-		EnemiesList.add(new Bandit(500., 500., 2));
+		//EnemiesList.add(new Bandit(500., 500., 2));
 
-		stalls.add(new GameObject("res/Stall.png", 100, 100, new Point3f(250, 250, 0 ) ) );
+		stalls.add(new GameObject("res/Stall.png", 150, 150, new Point3f(200, 100, 0 ) ) );
+		stalls.add(new GameObject("res/Stall.png", 150, 150, new Point3f(600, 100, 0 ) ) );
+		stalls.add(new GameObject("res/Stall.png", 150, 150, new Point3f(200, 750, 0 ) ) );
+		stalls.add(new GameObject("res/Stall.png", 150, 150, new Point3f(600, 750, 0 ) ) );
+
 	}
 	
 	// This is the heart of the game , where the model takes in all the inputs ,decides the outcomes and then changes the model accordingly. 
@@ -95,17 +99,35 @@ public class Model {
 					&& (eBullet.getOrigin().equals("Bandit")) )  {
 				health --;
 				if (health <= 0) {
-					//TODO create game over state
 					isPlayerDead = true;
 				}
 				EnemyBullet.remove(eBullet);
+			}
+		}
+
+		//Bandit bullet hits stall, remove it
+		for (Bullet ebullet : EnemyBullet) {
+			for (GameObject stall : stalls) {
+				if ( Math.abs(stall.getCentre().getX() - ebullet.getX()) < stall.getWidth()+80
+						&& Math.abs(stall.getCentre().getY()- ebullet.getY()) < stall.getHeight()+80 ) {
+					EnemyBullet.remove(ebullet);
+				}
+			}
+		}
+
+		//Player bullet hits stall
+		for (Bullet bullet : BulletList) {
+			for (GameObject stall : stalls) {
+				if ( Math.abs(stall.getCentre().getX() - bullet.getX()) < stall.getWidth()
+						&& Math.abs(stall.getCentre().getY()- bullet.getY()) < stall.getHeight() ) {
+					BulletList.remove(bullet);
+				}
 			}
 		}
 		
 	}
 
 	private void enemyLogic() {
-		// TODO Auto-generated method stub
 		for (Bandit bandit : EnemiesList) {
 			bandit.update();
 
@@ -211,9 +233,7 @@ public class Model {
 	}
 
 	private void CreateBullet() {
-		//BulletList.add(new GameObject("res/Bullet.png",16,32, new Point3f(Player.getCentre().getX(),Player.getCentre().getY(),0.0f)));
 		Bullet bullet = new Bullet(Player.getCentre().getX(), Player.getCentre().getY(), angleToMouse, 10, "Player");
-		//System.out.println("About to add bullet to list");
 			BulletList.add(bullet);
 	}
 
@@ -231,6 +251,10 @@ public class Model {
 
 	public CopyOnWriteArrayList<Bullet> getEnemyBullet() {
 		return EnemyBullet;
+	}
+
+	public CopyOnWriteArrayList<GameObject> getStalls() {
+		return stalls;
 	}
 
 	public int getScore() { 
