@@ -210,12 +210,16 @@ public class Viewer extends JPanel implements MouseMotionListener {
 	private void displayDirection(Graphics g) {
 		Font font = new Font("Courier", Font.BOLD, 50);
 		String direction = gameworld.getDirection();
-
+		long then = System.currentTimeMillis();
 		g.setFont(font);
-		Timer timer = new Timer(3000, (e) -> {
+//		Timer timer = new Timer(3000, (e) -> {
+//			g.drawString(("A wind blows from the " + direction + "..."), 500, 500);
+//		});
+//		timer.start();
+
+		if (System.currentTimeMillis() == (then+300) ) {
 			g.drawString(("A wind blows from the " + direction + "..."), 500, 500);
-		});
-		timer.start();
+		}
 	}
 
 

@@ -8,10 +8,7 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
+import javax.swing.*;
 
 
 import util.UnitTests;
@@ -64,6 +61,15 @@ public class MainWindow {
 	        canvas.setBackground(new Color(255,255,255)); //white background  replaced by Space background but if you remove the background method this will draw a white screen
 		    canvas.setVisible(false);   // this will become visible after you press the key.
 
+			// Difficulty select
+			JLabel difficultyMenu = new JLabel("Difficulty");
+			difficultyMenu.setVisible(true);
+			difficultyMenu.setBounds(250, 600, 200, 40);
+			Integer[] choices = { 1, 2, 3};
+			final JComboBox<Integer> box = new JComboBox<Integer>(choices);
+			box.setVisible(true);
+			box.setBounds(400, 600, 200, 40);
+
 	        JButton startMenuButton = new JButton("Start Game");  // start button 
 	        startMenuButton.addActionListener(new ActionListener() {
 				@Override
@@ -78,7 +84,9 @@ public class MainWindow {
 				}
 	           })
 			;
-	        startMenuButton.setBounds(400, 500, 200, 40); 
+	        startMenuButton.setBounds(400, 500, 200, 40);
+
+
 	        
 	        //loading background image 
 	        File BackroundToLoad = new File("res/startscreen.png");  //should work okay on OSX and Linux but check if you have issues depending your eclipse install or if your running this without an IDE 
@@ -93,6 +101,8 @@ public class MainWindow {
 			}   
 			 
 			frame.add(startMenuButton);
+//			frame.add(difficultyMenu);
+//			frame.add(box);
 			frame.setVisible(true);
 	}
 
@@ -112,9 +122,9 @@ public class MainWindow {
 			if(startGame) {
 				 gameloop();
 				 if (gameworld.isPlayerDead())
-				 	hello = new MainWindow();
+				 	//hello = new MainWindow();
 				 	//reset();
-				 	//break;
+				 	break;
 			}
 
 			//UNIT test to see if framerate matches 
@@ -153,7 +163,7 @@ public class MainWindow {
 	}
 
 	private static void endState() {
-		startGame = false;
+		//startGame = false;
 		File BackgroundToLoad = new File("res/Death_Screen.png");
 		try {
 

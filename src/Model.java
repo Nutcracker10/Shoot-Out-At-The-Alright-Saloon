@@ -44,9 +44,10 @@ public class Model {
 	 private Controller controller = new Controller();
 	 private CopyOnWriteArrayList<Bullet> BulletList = new CopyOnWriteArrayList<>();
 	 private CopyOnWriteArrayList<Bullet> EnemyBullet = new CopyOnWriteArrayList<>();
+	 private CopyOnWriteArrayList<GameObject> stalls = new CopyOnWriteArrayList<>();
 	 private Point mousePos = new Point();
 	 private double angleToMouse;
-	 private int score=0, waveCount = 1, health =1;
+	 private int score=0, waveCount = 1, health =1, difficulty=2;
 	 private String direction;
 	 private boolean isPlayerDead = false, generatingWave = false;
 
@@ -56,6 +57,8 @@ public class Model {
 		revolver = new Revolver();
 		direction = "North";
 		EnemiesList.add(new Bandit(500., 500., 2));
+
+		stalls.add(new GameObject("res/Stall.png", 100, 100, new Point3f(250, 250, 0 ) ) );
 	}
 	
 	// This is the heart of the game , where the model takes in all the inputs ,decides the outcomes and then changes the model accordingly. 
@@ -110,16 +113,22 @@ public class Model {
 				EnemyBullet.add(bandit.fireBullet(Player.getCentre().getX(), Player.getCentre().getY() ));
 			}
 		}
-		
+
+
 		if (EnemiesList.size() == 0) {
 			this.pickDirection();
-			while (EnemiesList.size()<6) {
+			int enemyCount = (waveCount + difficulty);
+			if (enemyCount > 15 )
+				enemyCount = 15;
+
+			while (EnemiesList.size() < enemyCount) {
 				generatingWave = true;
 				Point point = this.generateWave();
 
 				EnemiesList.add(new Bandit(point.getX(), point.getY(), 2));
 			}
 			generatingWave = false;
+			waveCount++;
 		}
 	}
 
@@ -140,7 +149,7 @@ public class Model {
 		for (Bullet bullet : EnemyBullet) {
 			bullet.update();
 
-			if (bullet.getY() < 0.0) {
+			if (bullet.getY() < 0.0 || bullet.getX() < 0. || bullet.getY() > 1000 || bullet.getX() > 1000) {
 				BulletList.remove(bullet);
 			}
 		}
@@ -303,6 +312,10 @@ public class Model {
 	}
 
 	public boolean isPlayerDead() { return isPlayerDead; }
+
+	public int getDifficulty() { return this.difficulty; }
+
+	public void setDifficulty(int difficulty)  { this.difficulty = difficulty;}
 }
 
 
