@@ -58,6 +58,18 @@ public class Model {
 		direction = "North";
 		EnemiesList.add(new Bandit(500., 500., 2));
 
+		switch (difficulty) {
+			case 1:
+				this.health = 8;
+				break;
+			case 2:
+				this.health = 5;
+				break;
+			case 3:
+				this.health = 3;
+				break;
+		}
+
 //		stalls.add(new GameObject("res/Stall.png", 150, 150, new Point3f(200, 100, 0 ) ) );
 //		stalls.add(new GameObject("res/Stall.png", 150, 150, new Point3f(600, 100, 0 ) ) );
 //		stalls.add(new GameObject("res/Stall.png", 150, 150, new Point3f(200, 750, 0 ) ) );

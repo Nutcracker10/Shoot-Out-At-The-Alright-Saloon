@@ -63,11 +63,20 @@ public class MainWindow {
 
 			// Difficulty select
 			JLabel difficultyMenu = new JLabel("Difficulty");
-			difficultyMenu.setVisible(true);
+//			difficultyMenu.setVisible(true);
 			difficultyMenu.setBounds(250, 600, 200, 40);
 			Integer[] choices = { 1, 2, 3};
 			final JComboBox<Integer> box = new JComboBox<Integer>(choices);
-			box.setVisible(true);
+			box.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					JComboBox b = (JComboBox) e.getSource();
+					int difficulty = (int) b.getSelectedItem();
+					gameworld.setDifficulty(difficulty);
+					box.setVisible(false);
+				}
+			});
+
 			box.setBounds(400, 600, 200, 40);
 
 	        JButton startMenuButton = new JButton("Start Game");  // start button 
@@ -86,10 +95,8 @@ public class MainWindow {
 			;
 	        startMenuButton.setBounds(400, 500, 200, 40);
 
-
-	        
 	        //loading background image 
-	        File BackroundToLoad = new File("res/startscreen.png");  //should work okay on OSX and Linux but check if you have issues depending your eclipse install or if your running this without an IDE 
+	        File BackroundToLoad = new File("res/StartMenu.png");  //should work okay on OSX and Linux but check if you have issues depending your eclipse install or if your running this without an IDE
 			try {
 				 
 				 BufferedImage myPicture = ImageIO.read(BackroundToLoad);
@@ -98,11 +105,10 @@ public class MainWindow {
 				 frame.add(BackgroundImageForStartMenu);
 			}  catch (IOException e) { 
 				e.printStackTrace();
-			}   
-			 
+			}
+			frame.add(difficultyMenu);
+			frame.add(box);
 			frame.add(startMenuButton);
-//			frame.add(difficultyMenu);
-//			frame.add(box);
 			frame.setVisible(true);
 	}
 
@@ -156,14 +162,12 @@ public class MainWindow {
 		 gameworld.setAngle(canvas.getImageAngleRad());
 
 		 if (gameworld.isPlayerDead()) {
-		 	//TODO DIE!!!
 			 endState();
 		 }
 		 
 	}
 
 	private static void endState() {
-		//startGame = false;
 		File BackgroundToLoad = new File("res/Death_Screen.png");
 		try {
 
@@ -172,33 +176,12 @@ public class MainWindow {
 			deathScreen.setBounds(0, 0, 1000, 1000);
 			canvas.setVisible(false);
 
-//			JButton playAgainbtn = new JButton("Play Again");  // start button
-//			playAgainbtn.setBounds(400, 600, 200, 40);
-//
-//			deathScreen.add(playAgainbtn);
-//			playAgainbtn.addActionListener(new ActionListener() {
-//				@Override
-//				public void actionPerformed(ActionEvent e) {
-//					reset();
-//				}
-//			});
-
 			frame.add(deathScreen);
 
 		}  catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-
-//	private static void reset() {
-//		frame = new JFrame("Shootout at the Alright Saloon");   // Change to the name of your game
-//		Model gameworld= new Model();
-//		Viewer canvas = new  Viewer( gameworld);
-//		KeyListener Controller =new Controller()  ;
-//		MouseListener Mouse = new Controller();
-//		TargetFPS = 100;
-//		startGame= false;
-//	}
 
 }
 
