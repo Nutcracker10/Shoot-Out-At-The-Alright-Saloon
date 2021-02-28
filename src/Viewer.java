@@ -25,6 +25,12 @@ import util.Bullet;
 import util.GameObject;
 import util.Revolver;
 
+/*
+	Name: James Kirwan
+	Student # : 17402782
+
+ */
+
 
 /*
  * Created by Abraham Campbell on 15/01/2020.
@@ -108,13 +114,11 @@ public class Viewer extends JPanel implements MouseMotionListener {
 		// change back
 		gameworld.getBullets().forEach((temp) -> 
 		{
-			//drawBullet(temp, g);
 			temp.draw(g);
 		});
 
 		gameworld.getEnemyBullet().forEach((temp) ->
 		{
-			//drawBullet(temp, g);
 			temp.draw(g);
 		});
 		
@@ -124,22 +128,22 @@ public class Viewer extends JPanel implements MouseMotionListener {
 		 	temp.draw(g, x, y);
 	    });
 
-		if (gameworld.isGeneratingWave() == true) {
-			displayDirection(g);
-		}
+//		if (gameworld.isGeneratingWave() == true) {
+//			displayDirection(g);
+//		}
 
-		gameworld.getStalls().forEach((stall) -> {
-			drawStall(g, stall);
-		});
+//		gameworld.getStalls().forEach((stall) -> {
+//			drawStall(g, stall);
+//		});
 	}
 
-	private void drawStall(Graphics g, GameObject stall ) {
-		File toLoad = new File( stall.getTexture() );
-		try {
-			Image myImage = ImageIO.read(toLoad);
-			g.drawImage(myImage, (int)stall.getCentre().getX(), (int)stall.getCentre().getY(), stall.getWidth(), stall.getHeight(), null);
-		} catch (IOException e) { e.printStackTrace(); }
-	}
+//	private void drawStall(Graphics g, GameObject stall ) {
+//		File toLoad = new File( stall.getTexture() );
+//		try {
+//			Image myImage = ImageIO.read(toLoad);
+//			g.drawImage(myImage, (int)stall.getCentre().getX(), (int)stall.getCentre().getY(), stall.getWidth(), stall.getHeight(), null);
+//		} catch (IOException e) { e.printStackTrace(); }
+//	}
 
 	private void drawBackground(Graphics g)
 	{
@@ -177,18 +181,14 @@ public class Viewer extends JPanel implements MouseMotionListener {
 			graphics2D.drawImage(myImage, x-40, y-40, width, height,  null);
 			graphics2D.setTransform(oldAT);
 
-			//credit to this stack overflow for showing how to do mouse following
+			//credit to this user from stack overflow for showing how to do mouse following
 			//https://stackoverflow.com/questions/26607930/java-rotate-image-towards-mouse-position
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
-		 
-		//g.drawImage(img, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, observer));
-		//Lighnting Png from https://opengameart.org/content/animated-spaceships  its 32x32 thats why I know to increament by 32 each time 
-		// Bullets from https://opengameart.org/forumtopic/tatermands-art 
-		// background image from https://www.needpix.com/photo/download/677346/space-stars-nebula-background-galaxy-universe-free-pictures-free-photos-free-images
+
 		
 	}
 
@@ -212,22 +212,26 @@ public class Viewer extends JPanel implements MouseMotionListener {
 
 		g.drawString("HP: " + gameworld.getHealth(), 830, 950);
 
+		/*
+		This method was partially inspired by this article
+		https://www.geeksforgeeks.org/jlabel-java-swing/
+		 */
 	}
 
-	private void displayDirection(Graphics g) {
-		Font font = new Font("Courier", Font.BOLD, 50);
-		String direction = gameworld.getDirection();
-		long then = System.currentTimeMillis();
-		g.setFont(font);
-//		Timer timer = new Timer(3000, (e) -> {
+//	private void displayDirection(Graphics g) {
+//		Font font = new Font("Courier", Font.BOLD, 50);
+//		String direction = gameworld.getDirection();
+//		long then = System.currentTimeMillis();
+//		g.setFont(font);
+////		Timer timer = new Timer(3000, (e) -> {
+////			g.drawString(("A wind blows from the " + direction + "..."), 500, 500);
+////		});
+////		timer.start();
+//
+//		if (System.currentTimeMillis() == (then+300) ) {
 //			g.drawString(("A wind blows from the " + direction + "..."), 500, 500);
-//		});
-//		timer.start();
-
-		if (System.currentTimeMillis() == (then+300) ) {
-			g.drawString(("A wind blows from the " + direction + "..."), 500, 500);
-		}
-	}
+//		}
+//	}
 
 
 	@Override

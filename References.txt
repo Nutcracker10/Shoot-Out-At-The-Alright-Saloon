@@ -1,0 +1,10 @@
+Make sprite face mouse : https://stackoverflow.com/questions/26607930/java-rotate-image-towards-mouse-position
+Info on Jlabels  : https://www.geeksforgeeks.org/jlabel-java-swing/
+Bullet Logic :	https://stackoverflow.com/questions/22734204/firing-a-projectile-in-mouse-direction-in-java
+Revolver Gunshot : https://soundbible.com/2120-9mm-Gunshot.html
+Revolver cocking noise : https://soundbible.com/416-Ruger-357-Magnum-Gun-Cock.html
+Revolver Reload :	https://soundbible.com/414-Eject-Clip-And-Re-Load.html
+Play Sound :	https://stackoverflow.com/questions/26305/how-can-i-play-sound-in-java
+Desert tile textures : https://beyonderboy.itch.io/desert-map-tileset-16x16
+More desert textures : https://free-game-assets.itch.io/free-rpg-desert-tileset
+Sound for bandit gun : https://soundbible.com/1998-Gun-Fire.html

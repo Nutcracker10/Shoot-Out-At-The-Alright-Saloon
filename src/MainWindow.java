@@ -14,6 +14,12 @@ import javax.swing.*;
 import util.UnitTests;
 
 /*
+	Name: James Kirwan
+	Student # : 17402782
+
+ */
+
+/*
  * Created by Abraham Campbell on 15/01/2020.
  *   Copyright (c) 2020  Abraham Campbell
 
@@ -63,7 +69,7 @@ public class MainWindow {
 
 			// Difficulty select
 			JLabel difficultyMenu = new JLabel("Difficulty");
-//			difficultyMenu.setVisible(true);
+			difficultyMenu.setVisible(true);
 			difficultyMenu.setBounds(250, 600, 200, 40);
 			Integer[] choices = { 1, 2, 3};
 			final JComboBox<Integer> box = new JComboBox<Integer>(choices);
@@ -73,6 +79,7 @@ public class MainWindow {
 					JComboBox b = (JComboBox) e.getSource();
 					int difficulty = (int) b.getSelectedItem();
 					gameworld.setDifficulty(difficulty);
+					difficultyMenu.setVisible(false);
 					box.setVisible(false);
 				}
 			});
@@ -123,13 +130,10 @@ public class MainWindow {
 			
 			//wait till next time step 
 		 while (FrameCheck > System.currentTimeMillis()){} 
-			
-			
+
 			if(startGame) {
 				 gameloop();
 				 if (gameworld.isPlayerDead())
-				 	//hello = new MainWindow();
-				 	//reset();
 				 	break;
 			}
 

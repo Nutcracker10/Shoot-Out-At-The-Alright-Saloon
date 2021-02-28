@@ -7,6 +7,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /*
+	Name: James Kirwan
+	Student # : 17402782
+
+ */
+
+/*
  * Created by Abraham Campbell on 15/01/2020.
  *   Copyright (c) 2020  Abraham Campbell
 

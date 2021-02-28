@@ -11,6 +11,12 @@ import java.time.Instant;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
+/*
+	Name: James Kirwan
+	Student # : 17402782
+
+ */
+
 public class Bandit {
     private double x,y, dX, dY;
     private double velocity;

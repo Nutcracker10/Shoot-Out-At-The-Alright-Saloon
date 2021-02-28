@@ -1,5 +1,11 @@
 package util;
 
+/*
+	Name: James Kirwan
+	Student # : 17402782
+
+ */
+
 public class Revolver {
     private int ammo;
     private int capacity;

@@ -6,6 +6,12 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+/*
+	Name: James Kirwan
+	Student # : 17402782
+
+ */
+
 public class Bullet {
     private double x, y; // current position of bullet
     private double velocity; // an arrow with both direction and magnitude - Vector, Despicable Me
@@ -22,8 +28,6 @@ public class Bullet {
         this.dX = Math.cos(angle);
         this.dY = Math.sin(angle);
 
-        double centre = ((height + width) / 2);
-
         this.x = x;
         this.y = y;
 
@@ -32,7 +36,6 @@ public class Bullet {
         } catch (IOException e) { e.printStackTrace(); }
 
     }
-
 
     public void draw(Graphics g) {
         g.drawImage(image, (int)x, (int)y, width, height, null);
@@ -43,7 +46,6 @@ public class Bullet {
         this.y += (dY*velocity);
     }
 
-    //for testing purposes
     public double getX() {
         return x;
     }
@@ -52,9 +54,10 @@ public class Bullet {
         return y;
     }
 
-    public int getHeight() { return height; }
-
-    public int getWidth() { return width; }
-
     public String getOrigin() { return origin; }
+
+    /*
+    Bullet code partially inspired by this post on stack overflow
+    https://stackoverflow.com/questions/22734204/firing-a-projectile-in-mouse-direction-in-java
+     */
 }

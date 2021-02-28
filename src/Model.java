@@ -13,6 +13,12 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 
 /*
+	Name: James Kirwan
+	Student # : 17402782
+
+ */
+
+/*
  * Created by Abraham Campbell on 15/01/2020.
  *   Copyright (c) 2020  Abraham Campbell
 
@@ -57,23 +63,6 @@ public class Model {
 		revolver = new Revolver();
 		direction = "North";
 		EnemiesList.add(new Bandit(500., 500., 2));
-
-		switch (difficulty) {
-			case 1:
-				this.health = 8;
-				break;
-			case 2:
-				this.health = 5;
-				break;
-			case 3:
-				this.health = 3;
-				break;
-		}
-
-//		stalls.add(new GameObject("res/Stall.png", 150, 150, new Point3f(200, 100, 0 ) ) );
-//		stalls.add(new GameObject("res/Stall.png", 150, 150, new Point3f(600, 100, 0 ) ) );
-//		stalls.add(new GameObject("res/Stall.png", 150, 150, new Point3f(200, 750, 0 ) ) );
-//		stalls.add(new GameObject("res/Stall.png", 150, 150, new Point3f(600, 750, 0 ) ) );
 
 	}
 	
@@ -293,6 +282,11 @@ public class Model {
 			clip.open(audioInputStream);
 			clip.start();
 		}catch (Exception e) { e.printStackTrace(); }
+		/*
+		This method was partially inspired by
+		https://stackoverflow.com/questions/26305/how-can-i-play-sound-in-java
+		 */
+
 	}
 
 	public Point generateWave() {
@@ -342,17 +336,27 @@ public class Model {
 
 	public int getHealth() { return health; }
 
-	public String getDirection() { return this.direction; }
-
-	public boolean isGeneratingWave() {
-		return generatingWave;
-	}
-
 	public boolean isPlayerDead() { return isPlayerDead; }
 
-	public int getDifficulty() { return this.difficulty; }
+	public void adjustHealth() {
 
-	public void setDifficulty(int difficulty)  { this.difficulty = difficulty;}
+		switch (difficulty) {
+			case 1:
+				this.health = 8;
+				break;
+			case 2:
+				this.health = 5;
+				break;
+			case 3:
+				this.health = 3;
+				break;
+		}
+	}
+
+	public void setDifficulty(int difficulty)  {
+		this.difficulty = difficulty;
+		adjustHealth();
+	}
 }
 
 
