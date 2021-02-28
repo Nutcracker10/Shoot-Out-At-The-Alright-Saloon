@@ -64,7 +64,6 @@ public class Bandit {
             //https://stackoverflow.com/questions/26607930/java-rotate-image-towards-mouse-position
 
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 

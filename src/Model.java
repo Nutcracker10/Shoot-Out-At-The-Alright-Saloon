@@ -56,12 +56,12 @@ public class Model {
 		Player= new GameObject("res/player.png",75,75,new Point3f(500,700,0));
 		revolver = new Revolver();
 		direction = "North";
-		//EnemiesList.add(new Bandit(500., 500., 2));
+		EnemiesList.add(new Bandit(500., 500., 2));
 
-		stalls.add(new GameObject("res/Stall.png", 150, 150, new Point3f(200, 100, 0 ) ) );
-		stalls.add(new GameObject("res/Stall.png", 150, 150, new Point3f(600, 100, 0 ) ) );
-		stalls.add(new GameObject("res/Stall.png", 150, 150, new Point3f(200, 750, 0 ) ) );
-		stalls.add(new GameObject("res/Stall.png", 150, 150, new Point3f(600, 750, 0 ) ) );
+//		stalls.add(new GameObject("res/Stall.png", 150, 150, new Point3f(200, 100, 0 ) ) );
+//		stalls.add(new GameObject("res/Stall.png", 150, 150, new Point3f(600, 100, 0 ) ) );
+//		stalls.add(new GameObject("res/Stall.png", 150, 150, new Point3f(200, 750, 0 ) ) );
+//		stalls.add(new GameObject("res/Stall.png", 150, 150, new Point3f(600, 750, 0 ) ) );
 
 	}
 	
@@ -94,8 +94,8 @@ public class Model {
 
 		//Player gets hit
 		for (Bullet eBullet : EnemyBullet) {
-			if  (Math.abs(Player.getCentre().getX() - eBullet.getX()) < Player.getWidth()
-					&& Math.abs(Player.getCentre().getY()- eBullet.getY()) < Player.getHeight()
+			if  (Math.abs(Player.getCentre().getX() - eBullet.getX()) < Player.getWidth()-20
+					&& Math.abs(Player.getCentre().getY()- eBullet.getY()) < Player.getHeight()-20
 					&& (eBullet.getOrigin().equals("Bandit")) )  {
 				health --;
 				if (health <= 0) {
@@ -108,8 +108,8 @@ public class Model {
 		//Bandit bullet hits stall, remove it
 		for (Bullet ebullet : EnemyBullet) {
 			for (GameObject stall : stalls) {
-				if ( Math.abs(stall.getCentre().getX() - ebullet.getX()) < stall.getWidth()+80
-						&& Math.abs(stall.getCentre().getY()- ebullet.getY()) < stall.getHeight()+80 ) {
+				if ( (Math.abs(stall.getCentre().getX() - ebullet.getX()) < stall.getWidth()-20)
+						&& (Math.abs(stall.getCentre().getY()- ebullet.getY()) < stall.getHeight()+70) ) {
 					EnemyBullet.remove(ebullet);
 				}
 			}
@@ -118,8 +118,8 @@ public class Model {
 		//Player bullet hits stall
 		for (Bullet bullet : BulletList) {
 			for (GameObject stall : stalls) {
-				if ( Math.abs(stall.getCentre().getX() - bullet.getX()) < stall.getWidth()
-						&& Math.abs(stall.getCentre().getY()- bullet.getY()) < stall.getHeight() ) {
+				if ( (Math.abs(stall.getCentre().getX() - bullet.getX()) < stall.getWidth())
+						&& (Math.abs(stall.getCentre().getY()- bullet.getY()) < stall.getHeight()) ) {
 					BulletList.remove(bullet);
 				}
 			}
@@ -133,6 +133,7 @@ public class Model {
 
 			if (bandit.isMoveReached() == true) {
 				EnemyBullet.add(bandit.fireBullet(Player.getCentre().getX(), Player.getCentre().getY() ));
+				playSound("res/bandit_sound.wav");
 			}
 		}
 
