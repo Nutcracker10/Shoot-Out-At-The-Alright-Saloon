@@ -134,7 +134,7 @@ public class Model {
 
 			if (bandit.isMoveReached() == true) {
 				EnemyBullet.add(bandit.fireBullet(Player.getCentre().getX(), Player.getCentre().getY() ));
-				playSound("res/bandit_sound.wav");
+				//playSound("res/bandit_sound.wav");
 			}
 		}
 
